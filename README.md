@@ -1,0 +1,1 @@
+# Este archivo es informativo para el desarrollo del proyecto
