@@ -1,19 +1,23 @@
-import { ShoppingCartIcon } from '../../icons/Icons'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { products } from '../../utils/products'
 import InfoCardProduct from './InfoCardProduct'
 
 function CardProduct() {
+  /* Id buscado */
   const { id } = useParams()
   console.log(id)
+
+  /* Busqueda del id que sea igual al del id del producto */
   const productos = products.find((product) => product.id === parseInt(id))
   console.log(productos)
 
+  /* Seleccion de la primera imagen que aparece en el array de productos */
   const [selectImage, setSelectImage] = useState(productos?.images[0])
 
   console.log(selectImage)
   const handleHoverProductImage = (image) => {
+    // Seleccion de una imagen cuando se encuentran varias en el array de datos (Images)
     setSelectImage(image)
   }
 

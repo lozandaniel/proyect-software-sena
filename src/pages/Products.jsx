@@ -4,10 +4,12 @@ import ListProducts from '../components/Products/ListProducts'
 import { products } from '../utils/products'
 
 function Products() {
+  /* Estado que ayuda a elegir el filtro de categorias */
   const [filters, setFilters] = useState({
     category: 'all',
   })
 
+  // Funcion que permite consultar los filtros que se estan pasando al estado
   const filterProducts = (products) => {
     return products.filter((product) => {
       return filters.category === 'all' || product.category === filters.category

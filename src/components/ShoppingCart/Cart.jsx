@@ -1,4 +1,5 @@
 function Cart() {
+  /* UI de vista de carrito de compras */
   return (
     <div className="flex">
       <section className="pb-4 w-4/5">

@@ -1,5 +1,6 @@
 import { SearchIcon } from '../../icons/Icons'
 
+/* Componente del campo de busqueda */
 function InputSearch() {
   return (
     <div className="bg-neutral-100 h-9 w-80 items-center gap-2 ps-2 rounded-md hidden lg:flex">

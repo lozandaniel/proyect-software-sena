@@ -1,4 +1,5 @@
 function FilterProducts({ onChange }) {
+  /* Filtro de busqueda cuando cambia la categoria */
   const handleChangeCategory = (e) => {
     onChange((prevState) => ({
       ...prevState,

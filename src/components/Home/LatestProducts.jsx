@@ -1,5 +1,6 @@
 import { products } from '../../utils/products'
 
+/* Ultimos productos */
 function LatestProducts() {
   return (
     <div className="flex flex-col justify-center items-center my-10">

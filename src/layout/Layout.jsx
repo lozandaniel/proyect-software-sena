@@ -4,6 +4,7 @@ import InputSearch from '../components/Header/InputSearch'
 import NavMenu from '../components/Header/NavMenu'
 import Footer from '../components/Footer'
 
+/* Layout de la pagina web */
 export default function Layout() {
   return (
     <>

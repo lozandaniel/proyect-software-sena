@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { ShoppingBagAdd } from '../../icons/Icons'
 import InputCategory from '../InputCategory'
 
-function ListProducts({ products }) {
+function ListProducts({ products }) { // Vista de productos
   return (
     <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-9/12 py-4 px-20">
       {products.map((product) => (

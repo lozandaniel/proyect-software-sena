@@ -1,3 +1,5 @@
+// LISTA DE ICONOS QUE SE ENCUENTRAN EN LA WEB
+
 export function SearchIcon() {
   return (
     <svg

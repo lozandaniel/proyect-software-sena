@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 
 function Login() {
+  /* Vista de Inicio de sesión  */
   return (
     <div className="min-h-screen flex">
       <div className="absolute top-0 -z-10 h-full w-full bg-white">
