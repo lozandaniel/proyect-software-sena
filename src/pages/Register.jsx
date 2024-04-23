@@ -6,11 +6,11 @@ function Register() {
         <div className="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[#0070F070] opacity-70 blur-[80px]"></div>
       </div>
       <Link to="/">
-      <img
-        src="/logo-distriquesos.png"
-        alt="Logo distriquesos charles"
-        className="w-72 absolute top-10 z-10 right-10"
-      />
+        <img
+          src="/logo-distriquesos.png"
+          alt="Logo distriquesos charles"
+          className="w-72 absolute top-10 z-10 right-10"
+        />
       </Link>
       <div className="mx-auto w-[43.75rem] flex flex-col justify-center items-center">
         <h1 className="text-4xl font-bold">Crea tu cuenta aquí</h1>

@@ -42,7 +42,7 @@ function Cart() {
             />
           </div>
 
-          <div className="flex-1 flex flex-col justify-between py-10">
+          <div className="flex-1 flex flex-col justify-between py-4">
             <div>
               <h3 className="text-lg font-semibold">
                 Brillo del Caribe: Suero Costeño

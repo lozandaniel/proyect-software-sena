@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 export default function Footer() {
   return (
-    <footer className="container mx-auto border-t-2 pt-8 my-4">
+    <footer className="container mx-auto border-t-2 pt-8 my-2">
       <h3 className="text-center text-3xl font-bold text-primaryColor">
         Nuestros favoritos recomendados
       </h3>
@@ -28,9 +28,7 @@ export default function Footer() {
             <li>
               <Link to="#">Términos y condiciones</Link>
             </li>
-            <li>
-              <Link to="#">Preguntas frecuentes</Link>
-            </li>
+            <li>Preguntas frecuentes</li>
           </ul>
 
           <ul>
@@ -63,7 +61,9 @@ export default function Footer() {
 
           <ul>
             <li className="font-semibold">Accesos Coorporativos</li>
-            <li>Mi cuenta</li>
+            <li>
+              <Link to="login">Mi cuenta</Link>
+            </li>
             <li>Mis pedidos</li>
           </ul>
         </div>

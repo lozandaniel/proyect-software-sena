@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 function NavMenu() {
   return (
     <nav className="mx-8">
-      <ul className="flex justify-center items-center gap-x-4 font-semibold">
+      <ul className="flex justify-center items-center gap-x-4 font-semibold whitespace-nowrap">
         <li>
           <NavLink
             to="/"

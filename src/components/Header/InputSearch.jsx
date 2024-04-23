@@ -1,8 +1,8 @@
-import { SearchIcon } from '../icons/Icons'
+import { SearchIcon } from '../../icons/Icons'
 
 function InputSearch() {
   return (
-    <div className="flex bg-neutral-100 h-9 w-80 items-center gap-2 ps-2 rounded-md">
+    <div className="bg-neutral-100 h-9 w-80 items-center gap-2 ps-2 rounded-md hidden lg:flex">
       <SearchIcon />
       <input
         type="search"

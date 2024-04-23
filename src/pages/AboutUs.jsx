@@ -23,14 +23,14 @@ export default function AboutUs() {
               </NavLink>
             </li>
             <li>
-              <NavLink
+              {/* <NavLink
                 to="preguntas-frecuentes"
                 className={({ isActive }) =>
                   isActive ? 'text-primaryColor' : ''
                 }
               >
                 Preguntas frecuentes
-              </NavLink>
+              </NavLink> */}
             </li>
           </ul>
         </aside>
