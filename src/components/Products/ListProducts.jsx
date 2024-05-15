@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
-import { ShoppingBagAdd } from '../../icons/Icons'
 import InputCategory from '../InputCategory'
+import { ShoppingBagAdd } from '../../icons/Icons'
 
-function ListProducts({ products }) { // Vista de productos
+function ListProducts({ products }) {
+  // Vista de productos
   return (
     <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-9/12 py-4 px-20">
       {products.map((product) => (
@@ -20,9 +21,10 @@ function ListProducts({ products }) { // Vista de productos
             <div className="flex flex-col gap-1 p-2">
               <h4 className="font-semibold text-sm">{product.title}</h4>
               <InputCategory
-                text={product.category}
-                textColor={'#085EAD'}
-                bgColor={'#085EAD'}
+                title={product.category}
+                className={
+                  'bg-[#0070F0]/20 text-[#0070F0] font-semibold text-xs'
+                }
               />
               <p className="text-md">$ {product.price}</p>
               <button

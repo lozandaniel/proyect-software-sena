@@ -19,7 +19,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/user/admin/*" element={<ViewAdmin />} />
+          <Route path="/view/admin/*" element={<ViewAdmin />} />
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/cart" element={<Cart />} />

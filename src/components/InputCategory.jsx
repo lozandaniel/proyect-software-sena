@@ -1,11 +1,12 @@
-function InputCategory({ text, bgColor, textColor }) {
+function InputCategory({ icon, title, className }) {
   /*  */
   return (
-    <span
-      className={`text-[${textColor}] bg-[${bgColor}]/20 font-semibold rounded-full text-xs py-1.5 text-center w-max px-2.5 `}
+    <div
+      className={`inline-flex justify-center items-center font-sm rounded-full py-1.5 text-center w-max px-2.5 ${className}`}
     >
-      {text}
-    </span>
+      {icon}
+      <span>{title}</span>
+    </div>
   )
 }
 

@@ -1,5 +1,4 @@
 import { products } from '../../utils/products'
-
 /* Ultimos productos */
 function LatestProducts() {
   return (
@@ -10,7 +9,7 @@ function LatestProducts() {
       <h2 className="text-3xl font-semibold col-span-2">
         Conoce nuestros ultimos productos
       </h2>
-      <section className="grid grid-cols-2 gap-2 w-9/12 py-4 items-center mx-auto">
+      <section className="grid grid-cols-2 gap-2 w-9/12 py-4 items-center mx-auto bg-cyan-500">
         {products.slice(0, 2).map((product) => (
           <article
             key={product.id}
