@@ -1,6 +1,46 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { redirect } from 'react-router-dom'
 
 function Login() {
+  const [dataForm, setDataForm] = useState({ email: '', password: '' })
+  const [errors, setErrors] = useState({})
+  const navigate = useNavigate()
+
+  const handleInputChange = (e) => {
+    setDataForm({ ...dataForm, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    try {
+      const response = await axios.post(
+        'http://localhost:8080/api/v1/user/login',
+        dataForm
+      )
+      localStorage.setItem('userInfo', JSON.stringify(response.data))
+      console.log(response.data)
+      navigate(response.data.rol.rol === 'admin' ? '/view/admin' : '/')
+    } catch (error) {
+      console.log(error.response.data)
+      setErrors(error.response.data)
+    }
+
+    console.log(dataForm)
+  }
+
+  if (localStorage.getItem('userData')) {
+    const userData = JSON.parse(localStorage.getItem('userData'))
+    const { role } = userData
+
+    // Redireccionar al dashboard o a la sección correspondiente según el rol
+    history.push(role === 'admin' ? '/admin' : '/user') // Cambia '/admin' y '/user' por las rutas correspondientes
+    return null // Evitar renderizar el formulario de login si el usuario ya está autenticado
+  }
+
   /* Vista de Inicio de sesión  */
   return (
     <div className="min-h-screen flex">
@@ -18,14 +58,16 @@ function Login() {
         <h1 className="text-4xl font-bold">Bienvenido!</h1>
         <p className="text-xl font-semibolds">Inicia sesión en tu cuenta</p>
 
-        <form action="" className="w-full px-2">
+        <form onSubmit={handleSubmit} className="w-full px-2">
           <div className="flex flex-col my-5 gap-2">
-            <label htmlFor="username" className="flex flex-col font-semibold">
+            <label htmlFor="email" className="flex flex-col font-semibold">
               Correo Electronico / Usuario
               <input
                 type="text"
-                name="username"
+                name="email"
                 placeholder="tuemail@gmail.com"
+                value={dataForm.email}
+                onChange={handleInputChange}
                 className="w-full font-normal rounded-md p-2 border border-neutral-200"
               />
             </label>
@@ -34,15 +76,22 @@ function Login() {
               <input
                 type="password"
                 name="password"
+                value={dataForm.password}
+                onChange={handleInputChange}
                 placeholder="Contraseña (mínimo 8 caracteres)"
                 className="w-full font-normal rounded-md p-2 border border-neutral-200"
               />
             </label>
           </div>
-          <button className="bg-primaryColor text-white font-semibold w-full rounded-md p-2">
+          <button
+            type="submit"
+            className="bg-primaryColor text-white font-semibold w-full rounded-md p-2"
+          >
             Iniciar Sesión
           </button>
         </form>
+
+        <div>{errors.message && <p>{errors.message}</p>}</div>
 
         <p className="font-light m-4">
           ¿Olvidaste tu contraseña? /{' '}

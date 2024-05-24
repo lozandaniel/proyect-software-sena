@@ -3,9 +3,13 @@ import { UserIcon, ShoppingCartIcon } from '../icons/Icons'
 import InputSearch from '../components/Header/InputSearch'
 import NavMenu from '../components/Header/NavMenu'
 import Footer from '../components/Footer'
+import { UserContext } from '../components/context/UserContext'
+import { useContext } from 'react'
 
 /* Layout de la pagina web */
 export default function Layout() {
+  const { isAdmin } = useContext(UserContext)
+
   return (
     <>
       <header className="w-full mx-auto flex items-center  px-4 sm:px-8 py-4">
@@ -25,9 +29,13 @@ export default function Layout() {
           <InputSearch />
 
           <div className="flex gap-x-2">
-            <Link to="/login">
-              <UserIcon />
-            </Link>
+            {isAdmin ? (
+              <Link to="/login">
+                <UserIcon />
+              </Link>
+            ) : (
+              <Link to="/view/admin">Admin</Link>
+            )}
             <Link to="/cart">
               <ShoppingCartIcon />
             </Link>

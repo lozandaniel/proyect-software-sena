@@ -2,7 +2,9 @@ import { Link } from 'react-router-dom'
 import { Routes, Route } from 'react-router-dom'
 import Inventory from './Inventory'
 import Provider from './Providers/Provider'
-import ListClient from './Clients/ListClient'
+import Client from './Clients/Client'
+import ProductsInfo from './Products/ProductsInfo'
+import Dashboard from './Dashboard'
 
 function ViewAdmin() {
   return (
@@ -20,14 +22,17 @@ function ViewAdmin() {
         <nav className="w-full">
           <ul className="*:bg-emerald-600 *:p-4 *:rounded-md flex flex-col gap-2 m-4 font-semibold">
             <li>
-              <Link>Vista</Link>
+              <Link to="dashboard">Vista</Link>
             </li>
             <li>
               <details>
                 <summary>Inventario</summary>
                 <ul className="px-10 py-1">
                   <li>
-                    <Link to="inventory">Gestionar Productos</Link>
+                    <Link to="inventory">Gestionar Inventario</Link>
+                  </li>
+                  <li>
+                    <Link to="inventory/products">Gestionar Productos</Link>
                   </li>
                 </ul>
               </details>
@@ -50,12 +55,13 @@ function ViewAdmin() {
           </ul>
         </nav>
       </aside>
-      <main className="flex-1 py-12 px-14 ml-[25%] bg-green-400">
+      <main className="flex-1 py-12 px-14 ml-[25%] overflow-x-auto">
         <Routes>
-          <Route path="/" element={<h1>Hola</h1>} />
-          <Route path="inventory" element={<Inventory />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="inventory/*" element={<Inventory />} />
+          <Route path="inventory/products" element={<ProductsInfo />} />
           <Route path="providers" element={<Provider />} />
-          <Route path="clients" element={<ListClient />} />
+          <Route path="clients" element={<Client />} />
         </Routes>
       </main>
     </div>

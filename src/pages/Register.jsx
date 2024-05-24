@@ -1,5 +1,39 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+import CustomInput from '../components/Admin/CustomInput'
+
 function Register() {
+  const [dataForm, setDataForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+    identification: 0,
+    phone: 0,
+    direction: '',
+  })
+  const [errors, setErrors] = useState({})
+
+  const handleInputChange = (e) => {
+    setDataForm({ ...dataForm, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    try {
+      const response = await axios.post(
+        'http://localhost:8080/api/v1/user/register',
+        dataForm
+      )
+      console.log(response.data)
+    } catch (error) {
+      console.log(error.response.data)
+      setErrors(error.response.data)
+    }
+
+    console.log(dataForm)
+  }
   // Vista para registrar usuario
   return (
     <div className="min-h-svh flex">
@@ -20,55 +54,66 @@ function Register() {
           ¡Regístrate en segundos para comenzar
         </p>
 
-        <form action="" className="w-full">
-          <div className="flex flex-col mb-5">
-            <label htmlFor="name" className="flex flex-col font-semibold">
-              Nombre
-              <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder="Nombre completo"
-                className="w-full font-normal rounded-md p-2 border border-neutral-200"
-              />
-            </label>
-            <label htmlFor="email" className="flex flex-col font-semibold">
-              Contraseña
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="tuemail@gmail.com"
-                className="w-full font-normal rounded-md p-2 border border-neutral-200"
-              />
-            </label>
-            <label htmlFor="password" className="flex flex-col font-semibold">
-              Contraseña
-              <input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="Contraseña (mínimo 8 caracteres)"
-                className="w-full font-normal rounded-md p-2 border border-neutral-200"
-              />
-            </label>
-            <label htmlFor="password-2" className="flex flex-col font-semibold">
-              Repetir Contraseña
-              <input
-                type="password"
-                id="password"
-                name="password-2"
-                placeholder="Contraseña (mínimo 8 caracteres)"
-                className="w-full font-normal rounded-md p-2 border border-neutral-200"
-              />
-            </label>
+        <form onSubmit={handleSubmit} className="w-full">
+          <div className="flex flex-col mb-5 gap-1">
+            <CustomInput
+              onChange={handleInputChange}
+              id="name"
+              label="Nombre"
+              placeholder="Nombre completo"
+            />
+            <CustomInput
+              onChange={handleInputChange}
+              type="email"
+              id="email"
+              label="Correo Electronico"
+              placeholder="tuemail@gmail.com"
+            />
+
+            <CustomInput
+              onChange={handleInputChange}
+              type="number"
+              id="identification"
+              label="Numero de identificación "
+              placeholder="Ej: 123456789"
+            />
+
+            <CustomInput
+              onChange={handleInputChange}
+              type="number"
+              id="phone"
+              label="Numero Telefonico"
+              placeholder="Numero telefonico"
+            />
+
+            <CustomInput
+              onChange={handleInputChange}
+              type="text"
+              id="direction"
+              label="Direccion (Opcional)"
+              placeholder="Direccion de residencia"
+            />
+            <CustomInput
+              onChange={handleInputChange}
+              type="password"
+              id="password"
+              label="Contraseña"
+              placeholder="Contraseña (mínimo 8 caracteres)"
+            />
           </div>
-          <button className="bg-primaryColor text-white font-semibold w-full rounded-md p-2">
+          <button
+            type="submit"
+            className="bg-primaryColor text-white font-medium w-full rounded-md p-2"
+          >
             Registrarme
           </button>
         </form>
 
-        <p className="font-light m-4">
+        <div className="text-red-600 py-4">
+          {errors.message && <p>{errors.message}</p>}
+        </div>
+
+        <p className="font-light">
           ¿Ya tienes una cuenta?{' '}
           <span className="font-medium  hover:text-primaryColor transition">
             <Link to="/login">Inicia Sesion aquí</Link>

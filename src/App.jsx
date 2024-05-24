@@ -10,26 +10,29 @@ import CardProduct from './components/Products/CardProduct'
 import Contact from './pages/Contact'
 import ViewAdmin from './components/Admin/ViewAdmin'
 import Cart from './components/ShoppingCart/Cart'
+import { UserProvider } from './components/context/UserContext'
 
 /* Rutas principales */
 function App() {
   return (
     <>
       <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/view/admin/*" element={<ViewAdmin />} />
-          <Route element={<Layout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/productos" element={<Products />} />
-            <Route path="/productos/:id" element={<CardProduct />} />
-            <Route path="/quienes-somos/*" element={<AboutUs />} />
-            <Route path="/contacto" element={<Contact />} />
-            <Route path="*" element={<Error />} />
-          </Route>
-        </Routes>
+        <UserProvider>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/view/admin/*" element={<ViewAdmin />} />
+            <Route element={<Layout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/productos" element={<Products />} />
+              <Route path="/productos/:id" element={<CardProduct />} />
+              <Route path="/quienes-somos/*" element={<AboutUs />} />
+              <Route path="/contacto" element={<Contact />} />
+              <Route path="*" element={<Error />} />
+            </Route>
+          </Routes>
+        </UserProvider>
       </BrowserRouter>
     </>
   )

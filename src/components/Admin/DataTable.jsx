@@ -1,12 +1,19 @@
 import { DeleteIcon, EditIcon } from '../../icons/Icons'
 import InputCategory from '../InputCategory'
 
-function DataTable({ data }) {
+function DataTable({ data, rowKey }) {
   // En caso de que no se encuentren datos, se enviara un mensaje correspondiente
   if (!data) return <p>No hay datos en este momento</p>
 
   // Esta constante permite obtener las keys de el objeto de datos
   const columns = Object.keys(data[0])
+
+  /*   const datLenght = data.length;
+  const arr = [];
+  for (let i = 0; i < datLenght; i++) {
+    arr.push(i)
+  }
+  console.log (arr) */
 
   return (
     <table className="w-full border-collapse border text-sm text-left">
@@ -23,10 +30,10 @@ function DataTable({ data }) {
         </tr>
       </thead>
       <tbody>
-        {data.map((row, index) => (
-          <tr className="bg-white border-b" key={index}>
+        {data.map((row) => (
+          <tr className="bg-white border-b" key={row[rowKey]}>
             {columns.map((columnName) => (
-              <td key={row.id_proveedor} className="px-4 py-2">
+              <td key={columnName} className="px-4 py-2">
                 {/* Se recorre cada columna, para traer sus datos */}
                 {row[columnName]}
               </td>
