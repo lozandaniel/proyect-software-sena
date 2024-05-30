@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import CustomInput from '../components/Admin/CustomInput'
+import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 function Register() {
   const [dataForm, setDataForm] = useState({
@@ -13,6 +15,7 @@ function Register() {
     direction: '',
   })
   const [errors, setErrors] = useState({})
+  const navigate = useNavigate()
 
   const handleInputChange = (e) => {
     setDataForm({ ...dataForm, [e.target.name]: e.target.value })
@@ -26,7 +29,12 @@ function Register() {
         'http://localhost:8080/api/v1/user/register',
         dataForm
       )
-      console.log(response.data)
+      if (response.status === 201) {
+        navigate('/login')
+        toast.success('Usuario creado con exito', {
+          position: 'top-center',
+        })
+      }
     } catch (error) {
       console.log(error.response.data)
       setErrors(error.response.data)

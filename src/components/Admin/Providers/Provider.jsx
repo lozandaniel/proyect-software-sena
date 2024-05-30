@@ -1,10 +1,29 @@
 import { useEffect, useState } from 'react'
 import { AddPlusIcon } from '../../../icons/Icons'
+import AddProviderModal from './AddProviderModal'
 import DataTable from '../DataTable'
+import { Toaster, toast } from 'react-hot-toast'
 import axios from 'axios'
 
+let initialProvider = [
+  {
+    name: '',
+    identification: 0,
+    phone: 0,
+    direction: '',
+    city: '',
+  },
+]
+
 function Provider() {
-  const [providerList, setProviderList] = useState([{}])
+  const [providerList, setProviderList] = useState(initialProvider)
+  const [isEdit, setIsEdit] = useState(null)
+  const [isOpen, setIsOpen] = useState(false)
+
+  const openModal = () => {
+    setIsOpen(!isOpen)
+    setIsEdit(null)
+  }
 
   console.log()
 
@@ -20,12 +39,37 @@ function Provider() {
         // Manejar el error
       }
     }
-
     fetchProvider()
   }, [])
 
+  const handleEdit = (provider) => {
+    setIsEdit(provider)
+    console.log(provider)
+    setIsOpen(true)
+  }
+
+  const deleteRow = async (id) => {
+    try {
+      const res = await axios.delete(
+        `http://localhost:8080/api/v1/providers/${id}`
+      )
+      const filterProviders = providerList.filter(
+        (provider) => provider.providerId != id
+      )
+      setProviderList(filterProviders)
+      toast.success(res.data.message, {
+        position: 'top-center',
+      })
+    } catch (error) {
+      console.log(error)
+    }
+    console.log(id)
+
+  }
+
   return (
     <div>
+      <Toaster />
       <header className="my-4 border-b-2 py-2">
         <h2 className="text-3xl font-bold">Proveedores</h2>
         <p className="font-light">
@@ -42,8 +86,9 @@ function Provider() {
         </div>
 
         <button
+          onClick={openModal}
           type="button"
-          className="text-white bg-primaryColor hover:bg-primaryColor/90 focus:ring-4 focus:outline-none
+          className="text-white bg-primaryColor hover:bg-primaryColor/90 focus:ring-2 focus:outline-none
                    focus:ring-primaryColor/50 font-medium gap-x-1 rounded-lg text-sm py-2 items-center px-4 justify-center inline-flex self-end"
         >
           <AddPlusIcon />
@@ -51,9 +96,30 @@ function Provider() {
         </button>
       </section>
 
-      <section className="my-4">
-        <DataTable data={providerList} rowKey="providerId" />
-      </section>
+      {isOpen && (
+        <AddProviderModal
+          setIsOpen={setIsOpen}
+          initialData={initialProvider}
+          setProviderList={setProviderList}
+          providerList={providerList}
+          isEdit={isEdit}
+        />
+      )}
+
+      <DataTable
+        data={providerList}
+        rowKey="providerId"
+        deleteRow={deleteRow}
+        onEditClick={handleEdit}
+        columns={[
+          'providerId',
+          'name',
+          'identification',
+          'phone',
+          'direction',
+          'city',
+        ]}
+      />
     </div>
   )
 }

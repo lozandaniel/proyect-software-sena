@@ -15,7 +15,7 @@ function NavMenu() {
         </li>
         <li>
           <NavLink
-            to="/productos"
+            to="/products"
             className={({ isActive }) => (isActive ? 'text-primaryColor' : '')}
           >
             Productos
@@ -31,7 +31,7 @@ function NavMenu() {
         </li>
         <li>
           <NavLink
-            to="/contacto"
+            to="/contact"
             className={({ isActive }) => (isActive ? 'text-primaryColor' : '')}
           >
             Contacto

@@ -12,11 +12,13 @@ export const UserProvider = ({ children }) => {
     const storedUser = localStorage.getItem('userInfo')
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser)
+      console.log(parsedUser)
       setUser(parsedUser)
-      setIsAdmin(storedUser && storedUser.rol === 'admin')
+      setIsAdmin(parsedUser?.rol?.rol === 'admin')
     }
-    console.log(isAdmin)
   }, [])
+
+  console.log(isAdmin)
 
   const logout = () => {
     setUser(null)

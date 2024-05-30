@@ -18,16 +18,20 @@ function FilterProducts({ onChange }) {
           name="category"
           id="category"
           onChange={handleChangeCategory}
-          className="bg-neutral-100 border border-[#E0E0E0] text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 "
+          className="bg-neutral-100 border border-[#E0E0E0] text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
+          defaultValue={'all'}
         >
           <option value="all" selected>
             Todos
           </option>
-          <option value="quesos">Quesos</option>
-          <option value="lacteos">Lacteos</option>
-          <option value="reposteria">Reposteria</option>
-          <option value="aceites">Aceites</option>
-          <option value="harinas">Harinas</option>
+          <option value="Quesos">Quesos</option>
+          <option value="Lácteos">Lacteos</option>
+          <option value="Reposteria">Reposteria</option>
+          <option value="Gourmet">Gourmet</option>
+          <option value="Aceites">Aceites</option>
+          <option value="Harinas">Harinas</option>
+          <option value="Harinas">Mantequillas</option>
+          <option value="Levaduras">Levaduras</option>
         </select>
       </div>
     </aside>

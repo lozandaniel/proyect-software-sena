@@ -58,7 +58,7 @@ export default function Dashboard() {
           </Link>
         </div>
         <div className="p-4 bg-purple-700 rounded">
-          <h3 className="text-lg font-semibold">Total de Ordenes</h3>
+          <h3 className="text-lg font-semibold">Total de Pedidos</h3>
           <p className="text-2xl">{dashboardData.totalOrders}</p>
         </div>
       </div>

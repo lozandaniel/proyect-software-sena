@@ -1,4 +1,4 @@
-function ListInventory({ listInventory }) {
+function ListInventory({ listInventory, deleteRow }) {
   return (
     <div className="sm:rounded-lg my-4">
       <table className="w-full border-collapse border text-sm text-left">
@@ -39,7 +39,9 @@ function ListInventory({ listInventory }) {
                 >
                   Editar
                 </a>
-                <button>Eliminar</button>
+                <button onClick={() => deleteRow(inventory?.inventoryId)}>
+                  Eliminar
+                </button>
               </td>
             </tr>
           ))}

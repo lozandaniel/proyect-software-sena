@@ -6,11 +6,12 @@ import Products from './pages/Products'
 import AboutUs from './pages/AboutUs'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import CardProduct from './components/Products/CardProduct'
 import Contact from './pages/Contact'
 import ViewAdmin from './components/Admin/ViewAdmin'
 import Cart from './components/ShoppingCart/Cart'
-import { UserProvider } from './components/context/UserContext'
+import { UserProvider } from './context/UserContext'
+import InfoProduct from './components/Products/InfoProduct'
+import CartProvider from './context/CartContext'
 
 /* Rutas principales */
 function App() {
@@ -18,20 +19,22 @@ function App() {
     <>
       <BrowserRouter>
         <UserProvider>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/view/admin/*" element={<ViewAdmin />} />
-            <Route element={<Layout />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/productos" element={<Products />} />
-              <Route path="/productos/:id" element={<CardProduct />} />
-              <Route path="/quienes-somos/*" element={<AboutUs />} />
-              <Route path="/contacto" element={<Contact />} />
-              <Route path="*" element={<Error />} />
-            </Route>
-          </Routes>
+          <CartProvider>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/view/admin/*" element={<ViewAdmin />} />
+              <Route element={<Layout />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/products/:id" element={<InfoProduct />} />
+                <Route path="/quienes-somos/*" element={<AboutUs />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="*" element={<Error />} />
+              </Route>
+            </Routes>
+          </CartProvider>
         </UserProvider>
       </BrowserRouter>
     </>

@@ -7,9 +7,11 @@ import AddProductForm from './AddProductForm'
 function ProductsInfo() {
   const [listProducts, setListProducts] = useState([])
   const [isOpen, setIsOpen] = useState(false)
+  const [productToEdit, setProductToEdit] = useState(null)
 
   const openModal = () => {
     setIsOpen(!isOpen)
+    setProductToEdit(null)
   }
 
   useEffect(() => {
@@ -28,6 +30,12 @@ function ProductsInfo() {
 
     fetchProducts()
   }, [])
+
+  const editProduct = (product) => {
+    setProductToEdit(product)
+    console.log(product)
+    setIsOpen(true)
+  }
 
   console.log(listProducts)
 
@@ -51,7 +59,7 @@ function ProductsInfo() {
         <button
           onClick={openModal}
           type="button"
-          className="text-white bg-primaryColor hover:bg-primaryColor/90 focus:ring-4 focus:outline-none
+          className="text-white bg-primaryColor hover:bg-primaryColor/90 focus:ring-2 focus:outline-none
                    focus:ring-primaryColor/50 font-medium gap-x-1 rounded-lg text-sm py-2 items-center px-4 justify-center inline-flex self-end"
         >
           <AddPlusIcon />
@@ -64,6 +72,7 @@ function ProductsInfo() {
           setIsOpen={setIsOpen}
           setListProducts={setListProducts}
           listProducts={listProducts}
+          productToEdit={productToEdit}
         />
       )}
 
@@ -71,6 +80,7 @@ function ProductsInfo() {
         <TableProduct
           setListProducts={setListProducts}
           listProducts={listProducts}
+          onEditClick={editProduct}
         />
       </section>
     </div>

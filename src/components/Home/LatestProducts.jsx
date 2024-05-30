@@ -7,9 +7,9 @@ function LatestProducts() {
         <div className="absolute bottom-auto left-0 top-0 h-[500px] w-[500px] -translate-x-[-80%] translate-y-[70%] rounded-full bg-[#0070F070] opacity-70 blur-[80px]"></div>
       </div>
       <h2 className="text-3xl font-semibold col-span-2">
-        Conoce nuestros ultimos productos
+        Conoce nuestros ultimos productos ✨
       </h2>
-      <section className="grid grid-cols-2 gap-2 w-9/12 py-4 items-center mx-auto bg-cyan-500">
+      <section className="grid grid-cols-2 gap-2 w-9/12 py-4 items-center mx-auto">
         {products.slice(0, 2).map((product) => (
           <article
             key={product.id}

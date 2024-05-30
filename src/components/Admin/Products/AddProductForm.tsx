@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import CustomInput from '../CustomInput'
-import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast'
+import axios from 'axios'
 
 interface Product {
   provider: {
@@ -12,6 +12,7 @@ interface Product {
   price: number
   category: string
   quantity: number
+  imageUrl: string
 }
 
 let initialProduct: Product = {
@@ -23,9 +24,15 @@ let initialProduct: Product = {
   price: 0,
   category: '',
   quantity: 0,
+  imageUrl: '',
 }
 
-function AddProductForm({ setIsOpen, setListProducts, listProducts }) {
+function AddProductForm({
+  setIsOpen,
+  setListProducts,
+  listProducts,
+  productToEdit,
+}) {
   const [newProduct, setNewProduct] = useState<Product>(initialProduct)
   const [providersList, setProvidersList] = useState<any[]>([])
 
@@ -39,6 +46,8 @@ function AddProductForm({ setIsOpen, setListProducts, listProducts }) {
     'Bebidas',
     'Harinas',
     'Aceites',
+    'Levaduras',
+    'Repostería',
   ]
 
   useEffect(() => {
@@ -54,6 +63,14 @@ function AddProductForm({ setIsOpen, setListProducts, listProducts }) {
     }
     fetchProviders()
   }, [])
+
+  useEffect(() => {
+    if (productToEdit) {
+      setNewProduct(productToEdit)
+    } else {
+      setNewProduct(initialProduct) // Reset form when productToEdit is null
+    }
+  }, [productToEdit])
 
   const handleChange = (
     event: React.ChangeEvent<
@@ -84,18 +101,35 @@ function AddProductForm({ setIsOpen, setListProducts, listProducts }) {
     console.log(newProduct)
 
     try {
-      const response = await axios.post(
-        'http://localhost:8080/api/v1/products',
-        newProduct
-      )
-      if (response.status === 200) {
-        setIsOpen(false)
-        setListProducts([...listProducts, response.data])
+      const response = productToEdit
+        ? await axios.put(
+            `http://localhost:8080/api/v1/products/${productToEdit.productId}/update`,
+            newProduct
+          )
+        : await axios.post('http://localhost:8080/api/v1/products', newProduct)
+
+      const responseData = response.data
+
+      if (productToEdit) {
+        setListProducts(
+          listProducts.map((product) =>
+            product.productId === productToEdit.productId
+              ? responseData.data
+              : product
+          )
+        )
+        toast.success(responseData.message, {
+          duration: 5000,
+          icon: '✔',
+        })
+      } else {
+        setListProducts((prevState) => [...prevState, responseData.data])
         toast.success('Producto agregado con exito', {
           duration: 5000,
           icon: '✔',
         })
       }
+      setIsOpen(false)
     } catch (error) {
       console.log('Error al enviar el producto:', error)
     }
@@ -124,11 +158,12 @@ function AddProductForm({ setIsOpen, setListProducts, listProducts }) {
         <label htmlFor="select-provider">
           Proveedor
           <select
+            disabled={productToEdit}
             onChange={handleChange}
             name="provider"
             id="select-provider"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-            defaultValue=""
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 disabled:bg-gray-400"
+            defaultValue={productToEdit ? newProduct.provider : ''}
           >
             <option value="" selected disabled>
               Escoge un proveedor
@@ -156,6 +191,14 @@ function AddProductForm({ setIsOpen, setListProducts, listProducts }) {
           placeholder="Indique precio del producto"
           value={newProduct.price}
         />
+        <CustomInput
+          onChange={handleChange}
+          type="text"
+          id="imageUrl"
+          label="Url de la imagen"
+          placeholder="Indique la url de la imagen"
+          value={newProduct.imageUrl}
+        />
 
         <label htmlFor="select-provider">
           Categoria:
@@ -164,6 +207,7 @@ function AddProductForm({ setIsOpen, setListProducts, listProducts }) {
             name="category"
             id="select-category"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+            value={newProduct.category}
           >
             <option value="" selected disabled>
               Escoge una categoria
@@ -185,6 +229,7 @@ function AddProductForm({ setIsOpen, setListProducts, listProducts }) {
             rows={6}
             className="inline-block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-md border border-neutral-200 focus:ring-blue-500  focus:ring-1 resize-none outline-none"
             placeholder="Ingrese una breve descripción"
+            value={newProduct.description}
           ></textarea>
         </div>
         <button
@@ -192,7 +237,7 @@ function AddProductForm({ setIsOpen, setListProducts, listProducts }) {
           className="text-white col-span-2 bg-primaryColor hover:bg-primaryColor/90 focus:ring-4 focus:outline-none
                    focus:ring-primaryColor/50 font-medium gap-x-1 rounded-lg text-sm py-2 items-center px-4 flex-grow inline-flex justify-center w-full my-2"
         >
-          Guardar Producto
+          {productToEdit ? 'Guardar Producto' : 'Crear Producto'}
         </button>
       </form>
     </div>

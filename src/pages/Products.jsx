@@ -1,22 +1,36 @@
-import { useState } from 'react'
-import FilterProducts from '../components/Products/FilterProducts'
+import { useState, useEffect } from 'react'
 import ListProducts from '../components/Products/ListProducts'
-import { products } from '../utils/products'
+import FilterProducts from '../components/Products/FilterProducts'
+import axios from 'axios'
 
 function Products() {
   /* Estado que ayuda a elegir el filtro de categorias */
   const [filters, setFilters] = useState({
     category: 'all',
   })
+  const [listToProducts, setListToProducts] = useState([])
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await axios.get('http://localhost:8080/api/v1/products')
+        setListToProducts(res.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchProducts()
+  }, [])
 
   // Funcion que permite consultar los filtros que se estan pasando al estado
   const filterProducts = (products) => {
+    if (!products) return []
     return products.filter((product) => {
       return filters.category === 'all' || product.category === filters.category
     })
   }
 
-  const listProductsFilter = filterProducts(products)
+  const listProductsFilter = filterProducts(listToProducts)
 
   return (
     <>
@@ -37,8 +51,12 @@ function Products() {
       </nav> */}
 
       <div className="flex flex-col lg:flex-row my-12">
-        <FilterProducts onChange={setFilters} />
-        <ListProducts products={listProductsFilter} />
+        <FilterProducts onChange={(newFilters) => setFilters(newFilters)} />
+        {listProductsFilter.length > 0 ? (
+          <ListProducts products={listProductsFilter} />
+        ) : (
+          <p>No se encuentran productos</p>
+        )}
       </div>
     </>
   )

@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { redirect } from 'react-router-dom'
+import CustomInput from '../components/Admin/CustomInput'
+import toast from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 
 function Login() {
   const [dataForm, setDataForm] = useState({ email: '', password: '' })
@@ -23,10 +26,11 @@ function Login() {
       )
       localStorage.setItem('userInfo', JSON.stringify(response.data))
       console.log(response.data)
-      navigate(response.data.rol.rol === 'admin' ? '/view/admin' : '/')
+      navigate(response.data.rol.rol === 'admin' ? '/view/admin/dashboard' : '/')
     } catch (error) {
       console.log(error.response.data)
       setErrors(error.response.data)
+      toast.error(error.response.data.message)
     }
 
     console.log(dataForm)
@@ -37,13 +41,14 @@ function Login() {
     const { role } = userData
 
     // Redireccionar al dashboard o a la sección correspondiente según el rol
-    history.push(role === 'admin' ? '/admin' : '/user') // Cambia '/admin' y '/user' por las rutas correspondientes
+    history.push(role === 'admin' ? '/admin' : '/') // Cambia '/admin' y '/user' por las rutas correspondientes
     return null // Evitar renderizar el formulario de login si el usuario ya está autenticado
   }
 
   /* Vista de Inicio de sesión  */
   return (
     <div className="min-h-screen flex">
+      <Toaster />
       <div className="absolute top-0 -z-10 h-full w-full bg-white">
         <div className="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[#0070F070] opacity-70 blur-[80px]"></div>
       </div>
@@ -60,28 +65,21 @@ function Login() {
 
         <form onSubmit={handleSubmit} className="w-full px-2">
           <div className="flex flex-col my-5 gap-2">
-            <label htmlFor="email" className="flex flex-col font-semibold">
-              Correo Electronico / Usuario
-              <input
-                type="text"
-                name="email"
-                placeholder="tuemail@gmail.com"
-                value={dataForm.email}
-                onChange={handleInputChange}
-                className="w-full font-normal rounded-md p-2 border border-neutral-200"
-              />
-            </label>
-            <label htmlFor="password" className="flex flex-col font-semibold">
-              Contraseña
-              <input
-                type="password"
-                name="password"
-                value={dataForm.password}
-                onChange={handleInputChange}
-                placeholder="Contraseña (mínimo 8 caracteres)"
-                className="w-full font-normal rounded-md p-2 border border-neutral-200"
-              />
-            </label>
+            <CustomInput
+              onChange={handleInputChange}
+              value={dataForm.email}
+              id="email"
+              label="Correo Electronico / Usuario"
+              placeholder="tuemail@gmail.com"
+            />
+            <CustomInput
+              onChange={handleInputChange}
+              value={dataForm.password}
+              id="password"
+              type="password"
+              label="Contraseña"
+              placeholder="Contraseña (mínimo 8 caracteres)"
+            />
           </div>
           <button
             type="submit"

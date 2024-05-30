@@ -1,10 +1,7 @@
 import axios from 'axios'
-import { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 
-function TableProduct({ setListProducts, listProducts }) {
-  const [productEdit, setProductEdit] = useState(null)
-
+function TableProduct({ setListProducts, listProducts, onEditClick }) {
   const handleDeleteProduct = async (id) => {
     try {
       const response = await axios.delete(
@@ -20,10 +17,6 @@ function TableProduct({ setListProducts, listProducts }) {
     } catch (error) {
       toast.error(error)
     }
-  }
-
-  const handleEditProduct = (product) => {
-    setProductEdit(product)
   }
 
   return (
@@ -55,12 +48,12 @@ function TableProduct({ setListProducts, listProducts }) {
               <td className="px-4 py-2">{product?.quantity}</td>
               <td className="px-4 py-2">{product?.imageUrl}</td>
               <td className="px-4 py-2 flex flex-row gap-x-2">
-                <a
-                  href="#"
+                <button
+                  onClick={() => onEditClick(product)}
                   className="font-medium text-blue-600 hover:underline"
                 >
                   Editar
-                </a>
+                </button>
                 <button onClick={() => handleDeleteProduct(product?.productId)}>
                   Eliminar
                 </button>

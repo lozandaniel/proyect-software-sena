@@ -1,10 +1,32 @@
 import { useState, useEffect } from 'react'
-import { AddPlusIcon } from '../../../icons/Icons'
+import DataTable from '../DataTable'
+import toast from 'react-hot-toast'
 import axios from 'axios'
-import ListClient from './ListClient'
 
 function Client() {
   const [listClients, setListClients] = useState([{}])
+
+  const handleDeleteClient = async (id) => {
+    try {
+      const res = await axios.delete(
+        `http://localhost:8080/api/v1/clients/${id}`
+      )
+      const filterProviders = listClients.filter(
+        (client) => client.clientId != id
+      )
+      setListClients(filterProviders)
+      toast.success(res.data.message, {
+        position: 'top-center',
+      })
+    } catch (error) {
+      console.log(error)
+    }
+    console.log(id)
+  }
+
+  const handleEditClick = (row) => {
+    console.log('Editar fila:', row)
+  }
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -37,20 +59,23 @@ function Client() {
           Total de clientes
           <span>{listClients.length}</span>
         </div>
-
-        <button
-          type="button"
-          className="text-white bg-primaryColor hover:bg-primaryColor/90 focus:ring-4 focus:outline-none
-                   focus:ring-primaryColor/50 font-medium gap-x-1 rounded-lg text-sm py-2 items-center px-4 justify-center inline-flex self-end"
-        >
-          <AddPlusIcon />
-          Agregar nuevo proveedor
-        </button>
       </section>
 
-      <section>
-        <ListClient listClient={listClients} />
-      </section>
+      <DataTable
+        columns={[
+          'clientId',
+          'rol.rol',
+          'identification',
+          'phone',
+          'email',
+          'direction',
+          'registerDate',
+        ]}
+        rowKey="clientId"
+        data={listClients}
+        deleteRow={handleDeleteClient}
+        onEditClick={handleEditClick}
+      />
     </div>
   )
 }

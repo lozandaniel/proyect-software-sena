@@ -1,54 +1,35 @@
-import { useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { products } from '../../utils/products'
-import InfoCardProduct from './InfoCardProduct'
+import { Link } from 'react-router-dom'
+import InputCategory from '../InputCategory'
+import { ShoppingBagAdd } from '../../icons/Icons'
 
-function CardProduct() {
-  /* Id buscado */
-  const { id } = useParams()
-  console.log(id)
-
-  /* Busqueda del id que sea igual al del id del producto */
-  const productos = products.find((product) => product.id === parseInt(id))
-  console.log(productos)
-
-  /* Seleccion de la primera imagen que aparece en el array de productos */
-  const [selectImage, setSelectImage] = useState(productos?.images[0])
-
-  console.log(selectImage)
-  const handleHoverProductImage = (image) => {
-    // Seleccion de una imagen cuando se encuentran varias en el array de datos (Images)
-    setSelectImage(image)
-  }
-
+function CardProduct({ product }) {
   return (
-    <>
-      <div className="flex flex-col md:flex-row py-32">
-        <div className="md:flex-1 px-4 flex flex-col items-center justify-center">
+    <li className="w-full rounded-md ring-1 ring-gray-300 bg-neutral-100 max-w-60 mx-auto">
+      <Link to={`/products/${product?.productId}`}>
+        <div className="w-full h-40 inline-block  rounded-t-md">
           <img
-            src={selectImage}
-            alt={productos?.title}
-            className="mb-4 transition-all max-w-96 max-h-96"
+            src={product.imageUrl}
+            className="w-full h-full object-cover rounded-t-md"
           />
-          <div className="grid grid-cols-5 gap-4">
-            {productos?.images?.map((image, index) => (
-              <div
-                key={index}
-                className="size-28"
-                onMouseEnter={() => handleHoverProductImage(image)}
-              >
-                <img
-                  src={image}
-                  className="w-full h-full object-cover"
-                  alt="Hola"
-                />
-              </div>
-            ))}
-          </div>
         </div>
-        <InfoCardProduct productos={productos} />
-      </div>
-    </>
+        <div className="flex flex-col gap-1 p-2">
+          <h4 className="font-semibold text-sm">{product?.name}</h4>
+          <InputCategory
+            title={product.category}
+            className={'bg-[#0070F0]/20 text-[#0070F0] font-semibold text-xs'}
+          />
+          <p className="text-md">$ {product.price}</p>
+          <button
+            type="button"
+            className="text-white bg-primaryColor hover:bg-primaryColor/90 focus:ring-4 focus:outline-none
+                   focus:ring-primaryColor/50 font-medium gap-x-1 rounded-lg text-sm py-2 text-center inline-flex justify-center items-center"
+          >
+            <ShoppingBagAdd />
+            Agregar
+          </button>
+        </div>
+      </Link>
+    </li>
   )
 }
 
