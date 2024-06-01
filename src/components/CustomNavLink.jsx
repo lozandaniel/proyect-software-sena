@@ -5,7 +5,7 @@ function CustomNavLink({ to, children }) {
     <NavLink
       to={to}
       className={({ isActive }) =>
-        isActive ? 'bg-primaryColor text-white' : ''
+        isActive ? 'bg-neutral-300 text-primaryColor' : ''
       }
     >
       <li>{children}</li>

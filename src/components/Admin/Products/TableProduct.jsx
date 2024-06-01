@@ -20,7 +20,7 @@ function TableProduct({ setListProducts, listProducts, onEditClick }) {
   }
 
   return (
-    <div className="sm:rounded-lg my-4 overflow-x-auto">
+    <div className="sm:rounded-lg my-4 overflow-x-auto p-4 bg-white">
       <Toaster />
       <table className="w-full border-collapse border text-sm text-left table-auto">
         <thead className="bg-primaryColor/80 text-xs text-gray-700 uppercase">

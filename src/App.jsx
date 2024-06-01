@@ -12,6 +12,8 @@ import Cart from './components/ShoppingCart/Cart'
 import { UserProvider } from './context/UserContext'
 import InfoProduct from './components/Products/InfoProduct'
 import CartProvider from './context/CartContext'
+import CheckoutPage from './components/ShoppingCart/CheckoutPage'
+import ProfileUser from './pages/ProfileUser'
 
 /* Rutas principales */
 function App() {
@@ -26,7 +28,9 @@ function App() {
               <Route path="/view/admin/*" element={<ViewAdmin />} />
               <Route element={<Layout />}>
                 <Route path="/" element={<Home />} />
+                <Route path="/view/profile" element={<ProfileUser />} />
                 <Route path="/cart" element={<Cart />} />
+                <Route path="/checkout" element={<CheckoutPage />} />
                 <Route path="/products" element={<Products />} />
                 <Route path="/products/:id" element={<InfoProduct />} />
                 <Route path="/quienes-somos/*" element={<AboutUs />} />

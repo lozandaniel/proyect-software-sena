@@ -5,6 +5,7 @@ import axios from 'axios'
 import AddInventory from './AddInventory'
 import useDeleteItem from '../hooks/useDeleteItem'
 import toast from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 
 function Inventory() {
   const [inventoryList, setInventoryList] = useState([])
@@ -26,7 +27,7 @@ function Inventory() {
     const fetchInventory = async () => {
       try {
         const response = await axios.get(
-          'http://localhost:8080/api/v1/inventorys'
+          'http://localhost:8080/api/v1/inventory'
         )
         setInventoryList(response.data)
       } catch (error) {
@@ -40,15 +41,22 @@ function Inventory() {
 
   const deleteRow = async (id) => {
     console.log(id)
-    const res = await deleteItem(`http://localhost:8080/api/v1/providers/${id}`)
-    if (res.statusCode === 200) {
-      console.log(res)
+    const result = await deleteItem(
+      `http://localhost:8080/api/v1/inventory/${id}`
+    )
+    if (result.statusCode === 200) {
+      console.log(result)
       const filterInventory = inventoryList.filter(
-        (inventory) => inventory.inventoryId != id
+        (inventory) => inventory.inventoryId !== id
       )
       setInventoryList(filterInventory)
 
-      toast.success(res.message, {
+      toast.success(result.message, {
+        position: 'top-center',
+      })
+    } else {
+      // Manejo del error si el result es nulo o si el statusCode no es 200
+      toast.error('Error al eliminar el ítem.', {
         position: 'top-center',
       })
     }
@@ -57,6 +65,7 @@ function Inventory() {
   return (
     <>
       <div>
+        <Toaster />
         <header className="my-4 border-b-2 py-2">
           <h2 className="text-3xl font-bold">Inventario de Productos</h2>
           <p className="font-light">

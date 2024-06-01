@@ -14,10 +14,9 @@ function CardProduct({ product }) {
         </div>
         <div className="flex flex-col gap-1 p-2">
           <h4 className="font-semibold text-sm">{product?.name}</h4>
-          <InputCategory
-            title={product.category}
-            className={'bg-[#0070F0]/20 text-[#0070F0] font-semibold text-xs'}
-          />
+          <InputCategory className="bg-[#0070F0]/20 text-[#0070F0] font-semibold text-xs">
+            {product.category}
+          </InputCategory>
           <p className="text-md">$ {product.price}</p>
           <button
             type="button"

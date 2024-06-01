@@ -1,6 +1,6 @@
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { AddPlusIcon } from '../../../icons/Icons'
-import { useState, useEffect } from 'react'
 import TableProduct from './TableProduct'
 import AddProductForm from './AddProductForm'
 

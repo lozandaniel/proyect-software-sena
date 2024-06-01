@@ -1,5 +1,5 @@
 import { Outlet, Link } from 'react-router-dom'
-import { UserIcon, ShoppingCartIcon } from '../icons/Icons'
+import { UserIcon, ShoppingCartIcon, UserEditIcon } from '../icons/Icons'
 import InputSearch from '../components/Header/InputSearch'
 import NavMenu from '../components/Header/NavMenu'
 import Footer from '../components/Footer'
@@ -7,7 +7,7 @@ import { useUser } from '../components/hooks/useUser'
 
 /* Layout de la pagina web */
 export default function Layout() {
-  const { isAdmin } = useUser()
+  const { isAdmin, user } = useUser()
 
   return (
     <>
@@ -28,8 +28,14 @@ export default function Layout() {
           <InputSearch />
 
           <div className="flex gap-x-2">
-            {isAdmin ? (
-              <Link to="/view/admin/dashboard">Admin</Link>
+            {user ? (
+              isAdmin ? (
+                <Link to="/view/admin/dashboard">Admin</Link>
+              ) : (
+                <Link to="/view/profile">
+                  <UserEditIcon />
+                </Link>
+              )
             ) : (
               <Link to="/login">
                 <UserIcon />

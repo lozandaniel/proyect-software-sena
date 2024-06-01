@@ -6,7 +6,7 @@ const useDeleteItem = () => {
       const response = await axios.delete(url)
       return response.data
     } catch (error) {
-      console.log(error)
+      console.log('Error eliminado el producto: ', error)
       return null
     }
   }

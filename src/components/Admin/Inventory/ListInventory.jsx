@@ -1,6 +1,6 @@
 function ListInventory({ listInventory, deleteRow }) {
   return (
-    <div className="sm:rounded-lg my-4">
+    <div className="sm:rounded-lg my-4 overflow-x-auto p-4 bg-white">
       <table className="w-full border-collapse border text-sm text-left">
         <thead className="bg-primaryColor/80 text-xs text-gray-700 uppercase">
           <tr>
@@ -13,7 +13,8 @@ function ListInventory({ listInventory, deleteRow }) {
             <th className="px-4 py-2">Max Stock</th>
             <th className="px-4 py-2">Batch</th>
             <th className="px-4 py-2">Estado</th>
-            <th className="px-4 py-2">Fecha</th>
+            <th className="px-4 py-2">Precio Compra</th>
+            <th className="px-4 py-2">Precio Venta</th>
             <th className="px-4 py-2">Acciones</th>
           </tr>
         </thead>
@@ -31,7 +32,8 @@ function ListInventory({ listInventory, deleteRow }) {
               <td className="px-4 py-2">{inventory?.maxStock}</td>
               <td className="px-4 py-2">{inventory?.batch}</td>
               <td className="px-4 py-2">{inventory?.status}</td>
-              <td className="px-4 py-2">{inventory?.date}</td>
+              <td className="px-4 py-2">{inventory?.buyPrice}</td>
+              <td className="px-4 py-2">{inventory?.sellPrice}</td>
               <td className="px-4 py-2 flex flex-row gap-x-2">
                 <a
                   href="#"

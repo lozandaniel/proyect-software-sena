@@ -1,6 +1,3 @@
-import { Link } from 'react-router-dom'
-import InputCategory from '../InputCategory'
-import { ShoppingBagAdd } from '../../icons/Icons'
 import CardProduct from './CardProduct'
 
 function ListProducts({ products }) {

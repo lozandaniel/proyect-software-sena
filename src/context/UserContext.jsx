@@ -18,7 +18,7 @@ export const UserProvider = ({ children }) => {
     }
   }, [])
 
-  console.log(isAdmin)
+  console.log(user)
 
   const logout = () => {
     setUser(null)

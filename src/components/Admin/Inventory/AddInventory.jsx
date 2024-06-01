@@ -42,6 +42,8 @@ function AddInventory({ setIsOpen, setInventoryList, inventoryList, isEdit }) {
         name === 'stock' ||
         name === 'maxStock' ||
         name === 'minStock' ||
+        name === 'buyPrice' ||
+        name === 'sellPrice' ||
         name === 'lot'
           ? Number(value)
           : value,
@@ -120,6 +122,7 @@ function AddInventory({ setIsOpen, setInventoryList, inventoryList, isEdit }) {
 
         {infoInputInventory.map((infoInput) => (
           <CustomInput
+            required
             key={infoInput.id}
             id={infoInput.id}
             onChange={handleChange}
@@ -135,7 +138,7 @@ function AddInventory({ setIsOpen, setInventoryList, inventoryList, isEdit }) {
           className="text-white col-span-2 bg-primaryColor hover:bg-primaryColor/90 focus:ring-4 focus:outline-none
                    focus:ring-primaryColor/50 font-medium gap-x-1 rounded-lg text-sm py-2 items-center px-4 flex-grow inline-flex justify-center w-full my-2"
         >
-          Crear Inventario
+          {isEdit ? 'Actualizar inventario' : 'Crear inventario'}
         </button>
       </form>
     </div>

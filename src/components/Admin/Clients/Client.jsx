@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import DataTable from '../DataTable'
-import toast from 'react-hot-toast'
+import { Toaster, toast } from 'react-hot-toast'
 import axios from 'axios'
+import DataTable from '../DataTable'
 
 function Client() {
   const [listClients, setListClients] = useState([{}])
@@ -45,6 +45,7 @@ function Client() {
 
   return (
     <div>
+      <Toaster />
       <header className="my-4 border-b-2 py-2">
         <h2 className="text-3xl font-bold">Clientes</h2>
         <p className="font-light">

@@ -78,7 +78,7 @@ function InfoProduct() {
             </div>
             <div>
               <span className="font-bold text-gray-700 ">
-                Unidades disponibles: 
+                Unidades disponibles:
               </span>
               <span className="text-gray-600"> {product?.quantity}</span>
             </div>
@@ -98,29 +98,6 @@ function InfoProduct() {
             </span>
           </div>
           <div className="flex justify-between gap-x-6">
-            <div className="flex gap-1">
-              <button
-                type="button"
-                className="text-white bg-primaryColor hover:bg-primaryColor/90 focus:ring-4 focus:outline-none
-                   focus:ring-primaryColor/50 font-medium gap-x-1 rounded-lg text-sm py-2 text-center inline-flex justify-center items-center px-4"
-              >
-                +
-              </button>
-              <button
-                type="button"
-                className="text-white bg-primaryColor/30 focus:ring-4 focus:outline-none
-                   focus:ring-primaryColor/50 font-medium gap-x-1 rounded-lg text-sm py-2 text-center inline-flex justify-center items-center px-4"
-              >
-                1
-              </button>
-              <button
-                type="button"
-                className="text-white bg-primaryColor hover:bg-primaryColor/90 focus:ring-4 focus:outline-none
-                   focus:ring-primaryColor/50 font-medium gap-x-1 rounded-lg text-sm py-2 text-center inline-flex justify-center items-center px-4"
-              >
-                -
-              </button>
-            </div>
             <button
               onClick={addProductToCart}
               type="button"

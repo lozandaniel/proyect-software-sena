@@ -64,7 +64,6 @@ function Provider() {
       console.log(error)
     }
     console.log(id)
-
   }
 
   return (

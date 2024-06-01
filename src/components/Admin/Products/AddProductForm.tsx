@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import CustomInput from '../CustomInput'
 import toast, { Toaster } from 'react-hot-toast'
 import axios from 'axios'
+import { infoInputProduct } from '../Utils/InfoInputProduct'
 
 interface Product {
   provider: {
@@ -148,16 +149,10 @@ function AddProductForm({
         >
           X
         </button>
-        <CustomInput
-          onChange={handleChange}
-          id="name"
-          label="Nombre"
-          placeholder="Felipe Federin"
-          value={newProduct.name}
-        />
         <label htmlFor="select-provider">
           Proveedor
           <select
+            required
             disabled={productToEdit}
             onChange={handleChange}
             name="provider"
@@ -175,34 +170,24 @@ function AddProductForm({
             ))}
           </select>
         </label>
-        <CustomInput
-          onChange={handleChange}
-          type="number"
-          id="quantity"
-          label="Cantidad"
-          placeholder="Indique una cantidad"
-          value={newProduct.quantity}
-        />
-        <CustomInput
-          onChange={handleChange}
-          type="number"
-          id="price"
-          label="Precio"
-          placeholder="Indique precio del producto"
-          value={newProduct.price}
-        />
-        <CustomInput
-          onChange={handleChange}
-          type="text"
-          id="imageUrl"
-          label="Url de la imagen"
-          placeholder="Indique la url de la imagen"
-          value={newProduct.imageUrl}
-        />
+
+        {infoInputProduct.map((camp) => (
+          <CustomInput
+            required
+            key={camp.id}
+            onChange={handleChange}
+            id={camp.id}
+            label={camp.label}
+            placeholder={camp.placeholder}
+            type={camp.type}
+            value={newProduct[camp.id]}
+          />
+        ))}
 
         <label htmlFor="select-provider">
           Categoria:
           <select
+            required
             onChange={handleChange}
             name="category"
             id="select-category"

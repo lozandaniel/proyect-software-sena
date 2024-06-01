@@ -30,6 +30,18 @@ export const infoInputInventory = [
     type: 'number',
   },
   {
+    id: 'buyPrice',
+    label: 'Precio de compra',
+    placeholder: 'Ingrese el precio de compra del producto',
+    type: 'number',
+  },
+  {
+    id: 'sellPrice',
+    label: 'Precio de venta',
+    placeholder: 'Ingrese el precio de venta del producto',
+    type: 'number',
+  },
+  {
     id: 'status',
     label: 'Estado del pedido',
     placeholder: 'Ingrese el estado del pedido',

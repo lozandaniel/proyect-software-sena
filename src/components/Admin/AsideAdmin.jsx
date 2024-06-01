@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import {
   InventoryIcon,
   LogoutUser,
+  OrdersIcon,
   UserIcon,
   UsersIcons,
   ViewDashboardIcon,
@@ -63,8 +64,10 @@ function AsideAdmin() {
           </CustomNavLink>
 
           <NavLink>
+            <OrdersIcon />
             <li>Pedidos</li>
           </NavLink>
+
           <NavLink>
             <li>Facturación electronica</li>
           </NavLink>
@@ -72,7 +75,7 @@ function AsideAdmin() {
             <li>Recursos humanos</li>
           </NavLink>
         </ul>
-        <ul className="text-red-600 p-4 rounded-md m-4 text-end">
+        <ul className="text-red-600 p-4 rounded-md m-4 text-end font-semibold">
           <li className="flex gap-x-2">
             <LogoutUser />
             <button onClick={logoutUser}>Cerrar sesión</button>
