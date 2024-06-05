@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
-import ListProducts from '../components/Products/ListProducts'
+import { useEffect, useState } from 'react'
 import FilterProducts from '../components/Products/FilterProducts'
-import axios from 'axios'
+import ListProducts from '../components/Products/ListProducts'
+import axiosInstance from '../utils/axiosConfig'
 
 function Products() {
   /* Estado que ayuda a elegir el filtro de categorias */
@@ -13,7 +13,7 @@ function Products() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get('http://localhost:8080/api/v1/products')
+        const res = await axiosInstance.get('/products')
         setListToProducts(res.data)
       } catch (error) {
         console.log(error)
@@ -34,7 +34,7 @@ function Products() {
 
   return (
     <>
-      <h2 className="font-bold text-3xl">Nuestros Productos</h2>
+      <h2 className="text-3xl font-bold">Nuestros Productos</h2>
       {/* <nav className=" w-full mx-auto flex justify-center">
         <ul className="grid grid-cols-5 w-1/2 text-center font-semibold">
           <li>Quesos</li>
@@ -50,12 +50,14 @@ function Products() {
         </ul>
       </nav> */}
 
-      <div className="flex flex-col lg:flex-row my-12">
+      <div className="my-12 flex flex-col items-center lg:flex-row lg:items-start">
         <FilterProducts onChange={(newFilters) => setFilters(newFilters)} />
         {listProductsFilter.length > 0 ? (
           <ListProducts products={listProductsFilter} />
         ) : (
-          <p>No se encuentran productos</p>
+          <p className="mx-4 italic">
+            Ups, no se encuentran productos en este momento.
+          </p>
         )}
       </div>
     </>

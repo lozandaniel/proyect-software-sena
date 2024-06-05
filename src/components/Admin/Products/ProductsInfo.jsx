@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
+import { useEffect, useState } from 'react'
 import { AddPlusIcon } from '../../../icons/Icons'
-import TableProduct from './TableProduct'
+import axiosInstance from '../../../utils/axiosConfig'
 import AddProductForm from './AddProductForm'
+import TableProduct from './TableProduct'
 
 function ProductsInfo() {
-  const [listProducts, setListProducts] = useState([])
-  const [isOpen, setIsOpen] = useState(false)
+  const [listProducts, setListProducts] = useState([{}])
   const [productToEdit, setProductToEdit] = useState(null)
+  const [isOpen, setIsOpen] = useState(false)
 
   const openModal = () => {
     setIsOpen(!isOpen)
@@ -17,17 +17,13 @@ function ProductsInfo() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(
-          'http://localhost:8080/api/v1/products'
-        )
+        const response = await axiosInstance.get('/products')
         setListProducts(response.data)
       } catch (error) {
         // Manejo del error
         console.error('Error fetching inventory table:', error)
       }
     }
-    console.log(listProducts)
-
     fetchProducts()
   }, [])
 
@@ -50,8 +46,8 @@ function ProductsInfo() {
         </p>
       </header>
 
-      <section className="flex gap-x-4 items-center justify-between">
-        <div className="bg-cyan-700 hover:bg-cyan-700/90 pointer-events-none py-10 px-14 font-semibold text-xl flex flex-col text-center rounded-lg text-white">
+      <section className="flex items-center justify-between gap-x-4">
+        <div className="pointer-events-none flex flex-col rounded-lg bg-cyan-700 px-14 py-10 text-center text-xl font-semibold text-white hover:bg-cyan-700/90">
           Total de productos
           <span>{listProducts.length}</span>
         </div>
@@ -59,8 +55,7 @@ function ProductsInfo() {
         <button
           onClick={openModal}
           type="button"
-          className="text-white bg-primaryColor hover:bg-primaryColor/90 focus:ring-2 focus:outline-none
-                   focus:ring-primaryColor/50 font-medium gap-x-1 rounded-lg text-sm py-2 items-center px-4 justify-center inline-flex self-end"
+          className="inline-flex items-center justify-center gap-x-1 self-end rounded-lg bg-primaryColor px-4 py-2 text-sm font-medium text-white hover:bg-primaryColor/90 focus:outline-none focus:ring-2 focus:ring-primaryColor/50"
         >
           <AddPlusIcon />
           Agregar nuevo producto
@@ -69,18 +64,18 @@ function ProductsInfo() {
 
       {isOpen && (
         <AddProductForm
-          setIsOpen={setIsOpen}
-          setListProducts={setListProducts}
           listProducts={listProducts}
           productToEdit={productToEdit}
+          setIsOpen={setIsOpen}
+          setListProducts={setListProducts}
         />
       )}
 
       <section>
         <TableProduct
-          setListProducts={setListProducts}
           listProducts={listProducts}
           onEditClick={editProduct}
+          setListProducts={setListProducts}
         />
       </section>
     </div>

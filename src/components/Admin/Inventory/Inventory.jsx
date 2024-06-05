@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 import { AddPlusIcon } from '../../../icons/Icons'
-import ListInventory from './ListInventory'
-import axios from 'axios'
-import AddInventory from './AddInventory'
+import axiosInstance from '../../../utils/axiosConfig'
 import useDeleteItem from '../hooks/useDeleteItem'
-import toast from 'react-hot-toast'
-import { Toaster } from 'react-hot-toast'
+import AddInventory from './AddInventory'
+import ListInventory from './ListInventory'
 
 function Inventory() {
   const [inventoryList, setInventoryList] = useState([])
@@ -26,9 +25,7 @@ function Inventory() {
   useEffect(() => {
     const fetchInventory = async () => {
       try {
-        const response = await axios.get(
-          'http://localhost:8080/api/v1/inventory'
-        )
+        const response = await axiosInstance.get('/inventory')
         setInventoryList(response.data)
       } catch (error) {
         console.error('Error fetching inventory table:', error)
@@ -41,9 +38,7 @@ function Inventory() {
 
   const deleteRow = async (id) => {
     console.log(id)
-    const result = await deleteItem(
-      `http://localhost:8080/api/v1/inventory/${id}`
-    )
+    const result = await deleteItem(`/inventory/${id}`)
     if (result.statusCode === 200) {
       console.log(result)
       const filterInventory = inventoryList.filter(
@@ -77,8 +72,8 @@ function Inventory() {
           </p>
         </header>
 
-        <section className="flex gap-x-4 items-center justify-between">
-          <div className="bg-[#ff7d20] hover:bg-primaryColor/90 pointer-events-none py-10 px-14 font-semibold text-xl flex flex-col text-center rounded-lg text-white">
+        <section className="flex items-center justify-between gap-x-4">
+          <div className="pointer-events-none flex flex-col rounded-lg bg-[#ff7d20] px-14 py-10 text-center text-xl font-semibold text-white hover:bg-primaryColor/90">
             Total de inventarios actuales
             <span>{inventoryList.length}</span>
           </div>
@@ -86,26 +81,25 @@ function Inventory() {
           <button
             onClick={openModal}
             type="button"
-            className="text-white bg-primaryColor hover:bg-primaryColor/90 focus:ring-4 focus:outline-none
-                   focus:ring-primaryColor/50 font-medium gap-x-1 rounded-lg text-sm py-2 items-center px-4 justify-center inline-flex self-end"
+            className="inline-flex items-center justify-center gap-x-1 self-end rounded-lg bg-primaryColor px-4 py-2 text-sm font-medium text-white hover:bg-primaryColor/90 focus:outline-none focus:ring-4 focus:ring-primaryColor/50"
           >
             <AddPlusIcon />
-            Agregar Inventario Nuevos
+            Agregar Inventario nuevo
           </button>
         </section>
 
         {inventoryList.length === 0 && (
-          <p className="text-gray-800 pt-2">
+          <p className="pt-2 text-gray-800">
             No se encuentras productos en el inventario
           </p>
         )}
 
         {isOpen && (
           <AddInventory
-            setIsOpen={setIsOpen}
             inventoryList={inventoryList}
-            setInventoryList={setInventoryList}
             isEdit={isEdit}
+            setInventoryList={setInventoryList}
+            setIsOpen={setIsOpen}
           />
         )}
 

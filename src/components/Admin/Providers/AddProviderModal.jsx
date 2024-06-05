@@ -1,9 +1,8 @@
 import { useState } from 'react'
-import { Toaster } from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
+import axiosInstance from '../../../utils/axiosConfig'
 import CustomInput from '../CustomInput'
-import { infoInputsProvider } from '../Utils/InfoCustomInputProvider'
-import axios from 'axios'
-import toast from 'react-hot-toast'
+import { infoInputsProvider } from '../utils/InfoCustomInputProvider'
 
 let initialProvider = {
   name: '',
@@ -14,10 +13,10 @@ let initialProvider = {
 }
 
 function AddProviderModal({
+  isEdit,
+  providerList,
   setIsOpen,
   setProviderList,
-  providerList,
-  isEdit,
 }) {
   const initialData = isEdit
     ? {
@@ -47,12 +46,11 @@ function AddProviderModal({
 
     try {
       const response = isEdit
-        ? await axios.put(
-            `http://localhost:8080/api/v1/providers/${isEdit.providerId}/update`,
+        ? await axiosInstance.put(
+            `/providers/${isEdit.providerId}/update`,
             formData
           )
-        : await axios.post('http://localhost:8080/api/v1/providers', formData)
-      console.log(response)
+        : await axiosInstance.post('/providers', formData)
 
       if (isEdit) {
         const findProvider = providerList.map((provider) =>
@@ -74,35 +72,34 @@ function AddProviderModal({
   }
 
   return (
-    <div className="fixed top-0 left-0 z-10 w-full h-full flex justify-center items-center bg-gray-900 bg-opacity-70">
+    <div className="fixed left-0 top-0 z-10 flex h-full w-full items-center justify-center bg-gray-900 bg-opacity-70">
       <Toaster />
       <form
+        className="relative grid grid-cols-2 gap-x-12 gap-y-1 rounded-lg bg-white p-10"
         onSubmit={handleSubmitForm}
-        className="grid-cols-2 grid gap-x-12 gap-y-1 bg-white p-10 rounded-lg relative"
       >
         <button
+          className="font-semibolds absolute right-4 top-4 rounded-md bg-primaryColor px-2 py-1 text-white hover:bg-primaryColor/90"
           onClick={() => setIsOpen(false)}
-          className="text-white font-semibolds absolute right-4 top-4 bg-primaryColor hover:bg-primaryColor/90 py-1 px-2 rounded-md"
         >
           X
         </button>
 
         {infoInputsProvider.map((infoInput) => (
           <CustomInput
-            key={infoInput.id}
-            id={infoInput.id}
-            onChange={handleChange}
-            type={infoInput.type}
-            label={infoInput.label}
-            placeholder={infoInput.placeholder}
             defaultValue={formData[infoInput.id] || ''}
+            id={infoInput.id}
+            key={infoInput.id}
+            label={infoInput.label}
+            onChange={handleChange}
+            placeholder={infoInput.placeholder}
+            type={infoInput.type}
           />
         ))}
 
         <button
+          className="col-span-2 my-2 inline-flex w-full flex-grow items-center justify-center gap-x-1 rounded-lg bg-primaryColor px-4 py-2 text-sm font-medium text-white hover:bg-primaryColor/90 focus:outline-none focus:ring-4 focus:ring-primaryColor/50"
           type="submit"
-          className="text-white col-span-2 bg-primaryColor hover:bg-primaryColor/90 focus:ring-4 focus:outline-none
-                   focus:ring-primaryColor/50 font-medium gap-x-1 rounded-lg text-sm py-2 items-center px-4 flex-grow inline-flex justify-center w-full my-2"
         >
           {isEdit ? 'Actualizar Proveedor' : 'Crear Proveedor'}
         </button>

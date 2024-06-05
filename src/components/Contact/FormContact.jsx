@@ -1,131 +1,66 @@
+import { infoInputContact } from '../../utils/infoInputContactForm'
+import CustomInput from '../Admin/CustomInput'
+
 function FormContact() {
   return (
     <div className="flex-1 px-20 py-6 md:py-0">
       <h2 className="text-2xl font-semibold">Formulario PQR's</h2>
-      <form action="">
-        <div>
-          <label
-            htmlFor=""
-            className="after:content-['*'] after:ml-0.5 after:text-red-500"
-          >
-            Nombre
-          </label>
-          <input
-            type="text"
-            placeholder="Nombre"
-            className="bg-gray-50 w-full p-2.5 border rounded-md text-sm outline-none focus:border-blue-500"
+      <form>
+        {infoInputContact.map((input) => (
+          <CustomInput
+            id={input.id}
+            key={input.id}
+            label={input.label}
+            placeholder={input.placeholder}
+            required
+            styleLabel="after:ml-0.5 after:text-red-500 after:content-['*']"
+            type={input.type}
           />
-        </div>
+        ))}
         <div>
           <label
-            htmlFor=""
-            className="after:content-['*'] after:ml-0.5 after:text-red-500"
-          >
-            Apellidos
-          </label>
-          <input
-            type="text"
-            placeholder="Apellidos"
-            className="bg-gray-50 w-full p-2.5 border rounded-md text-sm outline-none focus:border-blue-500"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor=""
-            className="after:content-['*'] after:ml-0.5 after:text-red-500"
-          >
-            Tipo de documento
-          </label>
-          <input
-            type="text"
-            placeholder="DNI / CC / TI"
-            className="bg-gray-50 w-full p-2.5 border rounded-md text-sm outline-none focus:border-blue-500"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor=""
-            className="after:content-['*'] after:ml-0.5 after:text-red-500"
-          >
-            Numero de documento
-          </label>
-          <input
-            type="text"
-            placeholder="Número de documento (sin espacios ni guiones)"
-            className="bg-gray-50 w-full p-2.5 border rounded-md text-sm outline-none focus:border-blue-500 "
-          />
-        </div>
-        <div>
-          <label
-            htmlFor=""
-            className="after:content-['*'] after:ml-0.5 after:text-red-500"
-          >
-            Numero telefonico
-          </label>
-          <input
-            type="text"
-            placeholder="Número de teléfono móvil"
-            className="bg-gray-50 w-full p-2.5 border rounded-md text-sm outline-none focus:border-blue-500 "
-          />
-        </div>
-        <div>
-          <label
-            htmlFor=""
-            className="after:content-['*'] after:ml-0.5 after:text-red-500"
-          >
-            Correo Electronico
-          </label>
-          <input
-            type="text"
-            placeholder="Ejemplo: ejemplo@correo.com"
-            className="bg-gray-50 w-full p-2.5 border rounded-md text-sm outline-none focus:border-blue-500 "
-          />
-        </div>
-        <div>
-          <label
+            className="after:ml-0.5 after:text-red-500 after:content-['*']"
             htmlFor="category"
-            className="after:content-['*'] after:ml-0.5 after:text-red-500"
           >
             Categorias
           </label>
           <select
-            name="category"
+            className="w-full rounded-md border bg-gray-50 p-2.5 text-sm focus:border-blue-500"
             id="category"
-            className="w-full bg-gray-50 border text-sm rounded-md focus:border-blue-500 p-2.5"
+            name="category"
           >
             <option value="all" selected disabled>
               ---
             </option>
-            <option value="quesos">Peticion</option>
-            <option value="lacteos">Queja</option>
-            <option value="lacteos">Reclamos</option>
-            <option value="lacteos">Información</option>
+            <option value="peticion">Peticion</option>
+            <option value="queja">Queja</option>
+            <option value="reclamos">Reclamos</option>
+            <option value="informacion">Información</option>
           </select>
         </div>
         <div>
           <label
             htmlFor="message"
-            className="after:content-['*'] after:ml-0.5 after:text-red-500"
+            className="after:ml-0.5 after:text-red-500 after:content-['*']"
           >
             Cuéntenos su inquietud
           </label>
           <textarea
+            className="block w-full resize-none rounded-md border border-neutral-200 bg-gray-50 p-2.5 text-sm text-gray-900 outline-none focus:ring-1 focus:ring-blue-500"
             id="message"
+            placeholder="Ingresa aqui tu inquietuds"
             rows="4"
-            className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-md border border-neutral-200 focus:ring-blue-500  focus:ring-1 resize-none outline-none"
-            placeholder="Holas"
           ></textarea>
         </div>
         <button
+          className="my-2 inline-flex w-full flex-grow items-center justify-center gap-x-1 rounded-lg bg-primaryColor px-4 py-2 text-sm font-medium text-white hover:bg-primaryColor/90 focus:outline-none focus:ring-4 focus:ring-primaryColor/50"
           type="button"
-          className="text-white bg-primaryColor hover:bg-primaryColor/90 focus:ring-4 focus:outline-none
-                   focus:ring-primaryColor/50 font-medium gap-x-1 rounded-lg text-sm py-2 items-center px-4 flex-grow inline-flex justify-center w-full my-2"
         >
           Enviar
         </button>
       </form>
       <p className="text-sm">
-        Acepto la política de privacidad de{' '}
+        Acepto la política de privacidad de
         <span className="font-semibold">Distriquesos Charles</span>
       </p>
     </div>

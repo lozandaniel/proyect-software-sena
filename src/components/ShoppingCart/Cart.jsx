@@ -1,20 +1,20 @@
 import { Toaster, toast } from 'react-hot-toast'
-import { useCart } from '../hooks/useCart'
 import { Link } from 'react-router-dom'
+import { useCart } from '../../hooks/useCart'
 
 function Cart() {
   /* UI de vista de carrito de compras */
   const { cartItems, deleteProduct, totalCart, updateQuantity } = useCart()
 
   return (
-    <div className="flex">
+    <div className="my-8 flex flex-col lg:flex-row">
       <Toaster />
-      <section className="pb-4 w-4/5">
-        <h2 className="font-bold text-2xl">Carrito de compras</h2>
+      <section className="w-full pb-4 lg:w-9/12">
+        <h2 className="text-2xl font-bold">Carrito de compras</h2>
         {cartItems.length > 0 ? (
           cartItems.map((product) => (
             <article key={product.productId} className="flex border-b-2 px-4">
-              <div className="flex w-1/5 h-48 justify-center">
+              <div className="flex h-48 w-1/5 justify-center">
                 <img
                   src={product.imageUrl}
                   alt="Suero Costeño"
@@ -22,7 +22,7 @@ function Cart() {
                 />
               </div>
 
-              <div className="flex-1 flex flex-col justify-between py-4">
+              <div className="flex flex-1 flex-col justify-between py-4">
                 <div>
                   <h3 className="text-lg font-semibold">{product.name}</h3>
                   <span className="text-sm text-green-500">Disponible</span>
@@ -41,10 +41,12 @@ function Cart() {
                     {product.provider.name}
                   </p>
                 </div>
-                <div className="flex gap-x-2 justify-between  text-sm">
-                  <div className="flex item-center gap-x-2 text-sms">
-                    <p>Cantidad:</p>
+                <div className="flex justify-between gap-x-2 text-sm">
+                  <div className="item-center text-sms flex gap-x-2">
+                    <strong>Cantidad:</strong>
                     <button
+                      className="inline-flex h-5 w-5 items-center justify-center rounded-md border border-gray-300 bg-primaryColor text-white hover:bg-primaryColor/70 focus:outline-none focus:ring-2 focus:ring-gray-100"
+                      type="button"
                       onClick={() => {
                         if (product.quantity > 1) {
                           updateQuantity(
@@ -53,31 +55,29 @@ function Cart() {
                           )
                         }
                       }}
-                      type="button"
-                      className="text-white bg-primaryColor hover:bg-primaryColor/70 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 focus:ring-2 focus:outline-none"
                     >
                       -
                     </button>
-                    <span>{product?.quantity}</span>
+                    <span className="font-normal">{product?.quantity}</span>
                     <button
+                      className="inline-flex h-5 w-5 items-center justify-center rounded-md border border-gray-300 bg-primaryColor text-white hover:bg-primaryColor/70 focus:outline-none focus:ring-2 focus:ring-gray-100"
+                      type="button"
                       onClick={() =>
                         updateQuantity(product.productId, product.quantity + 1)
                       }
-                      type="button"
-                      className="text-white bg-primaryColor hover:bg-primaryColor/70 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 focus:ring-2 focus:outline-none"
                     >
                       +
                     </button>
                   </div>
                   <button
+                    className="font-semibold text-red-500 hover:text-[#D32F2F]"
                     onClick={() => {
                       deleteProduct(product.productId)
                       toast.success('Producto eliminado del carrito', {
-                        position: 'top-right',
+                        position: 'top-center',
                         style: { backgroundColor: '#D4EDDA' },
                       })
                     }}
-                    className="text-red-500"
                   >
                     Eliminar
                   </button>
@@ -86,28 +86,27 @@ function Cart() {
             </article>
           ))
         ) : (
-          <p>Vaya... No tienes productos en tu carrito aun</p>
+          <p>Vaya... Aun no tienes productos en tu carrito!</p>
         )}
       </section>
-      <section className="w-1/5 flex flex-col border border-neutral-200 self-start p-2 rounded-md">
-        <h5 className="font-semibold my-1">Resumen de Compra: Total a pagar</h5>
+      <section className="flex w-full flex-col self-start rounded-md border border-neutral-200 p-2 lg:w-3/12">
+        <h5 className="my-1 font-semibold">Resumen de Compra: Total a pagar</h5>
         <div className="flex flex-col justify-between gap-2">
           <div className="inline-flex justify-between border-b-2">
             <h2 className="font-semibold text-neutral-400">Subtotal</h2>
-            <span className="">${totalCart}</span>
+            <span>${totalCart}</span>
           </div>
 
           <div className="inline-flex justify-between">
             <h2 className="font-semibold text-neutral-400">Total</h2>
-            <span className="">${totalCart}</span>
+            <span>${totalCart}</span>
           </div>
         </div>
         <Link to="/checkout" className="rounded-lg">
           <button
+            className="mt-2 inline-flex w-full flex-grow items-center justify-center gap-x-1 rounded-md bg-primaryColor px-4 py-2 text-sm font-medium text-white hover:bg-primaryColor/90 focus:outline-none focus:ring-primaryColor/50 disabled:bg-slate-500"
             disabled={cartItems.length <= 0}
             type="button"
-            className="text-white bg-primaryColor hover:bg-primaryColor/90 focus:outline-none
-                   focus:ring-primaryColor/50 font-medium gap-x-1  text-sm py-2 items-center px-4 mt-2 flex-grow inline-flex justify-center disabled:bg-slate-500"
           >
             Pagar Ahora
           </button>

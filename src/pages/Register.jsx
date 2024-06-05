@@ -1,34 +1,31 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import axios from 'axios'
-import CustomInput from '../components/Admin/CustomInput'
-import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import { Link, useNavigate } from 'react-router-dom'
+import CustomInput from '../components/Admin/CustomInput'
+import axiosInstance from '../utils/axiosConfig'
 
 function Register() {
   const [dataForm, setDataForm] = useState({
-    name: '',
-    email: '',
-    password: '',
-    identification: 0,
-    phone: 0,
     direction: '',
+    email: '',
+    identification: 0,
+    name: '',
+    password: '',
+    phone: 0,
   })
   const [errors, setErrors] = useState({})
   const navigate = useNavigate()
 
   const handleInputChange = (e) => {
-    setDataForm({ ...dataForm, [e.target.name]: e.target.value })
+    const { name, value } = e.target
+    setDataForm({ ...dataForm, [name]: value })
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     try {
-      const response = await axios.post(
-        'http://localhost:8080/api/v1/user/register',
-        dataForm
-      )
+      const response = await axiosInstance.post('/user/register', dataForm)
       if (response.status === 201) {
         navigate('/login')
         toast.success('Usuario creado con exito', {
@@ -42,9 +39,10 @@ function Register() {
 
     console.log(dataForm)
   }
+
   // Vista para registrar usuario
   return (
-    <div className="min-h-svh flex">
+    <div className="flex min-h-svh">
       <div className="absolute top-0 -z-10 h-full w-full bg-white">
         <div className="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[#0070F070] opacity-70 blur-[80px]"></div>
       </div>
@@ -52,78 +50,85 @@ function Register() {
         <img
           src="/logo-distriquesos.png"
           alt="Logo distriquesos charles"
-          className="w-72 absolute top-10 z-10 right-10"
+          className="absolute right-10 top-10 z-10 w-72"
         />
       </Link>
-      <div className="mx-auto w-[43.75rem] flex flex-col justify-center items-center">
+      <div className="mx-auto flex w-[43.75rem] flex-col items-center justify-center">
         <h1 className="text-4xl font-bold">Crea tu cuenta aquí</h1>
-        <p className="text-xl font-semibolds mb-5">
+        <p className="mb-2 text-center text-lg">
           Únete ahora y accede a todo lo que necesitas con un solo registro.
           ¡Regístrate en segundos para comenzar
         </p>
 
         <form onSubmit={handleSubmit} className="w-full">
-          <div className="flex flex-col mb-5 gap-1">
+          <div className="mb-5 flex flex-col gap-1">
             <CustomInput
-              onChange={handleInputChange}
               id="name"
               label="Nombre"
+              onChange={handleInputChange}
               placeholder="Nombre completo"
+              required
             />
             <CustomInput
-              onChange={handleInputChange}
-              type="email"
               id="email"
               label="Correo Electronico"
+              onChange={handleInputChange}
               placeholder="tuemail@gmail.com"
+              required
+              type="email"
             />
 
             <CustomInput
-              onChange={handleInputChange}
-              type="number"
               id="identification"
               label="Numero de identificación "
+              onChange={handleInputChange}
               placeholder="Ej: 123456789"
+              required
+              type="number"
             />
 
             <CustomInput
-              onChange={handleInputChange}
-              type="number"
               id="phone"
               label="Numero Telefonico"
+              onChange={handleInputChange}
               placeholder="Numero telefonico"
+              required
+              type="number"
             />
 
             <CustomInput
-              onChange={handleInputChange}
-              type="text"
               id="direction"
-              label="Direccion (Opcional)"
-              placeholder="Direccion de residencia"
-            />
-            <CustomInput
+              label="Direccion de residencia"
               onChange={handleInputChange}
-              type="password"
+              placeholder="Direccion de residencia"
+              required
+              type="text"
+            />
+
+            <CustomInput
               id="password"
               label="Contraseña"
+              onChange={handleInputChange}
               placeholder="Contraseña (mínimo 8 caracteres)"
+              required
+              type="password"
             />
           </div>
           <button
             type="submit"
-            className="bg-primaryColor text-white font-medium w-full rounded-md p-2"
+            className="w-full rounded-md bg-primaryColor p-2 font-medium text-white"
           >
             Registrarme
           </button>
         </form>
 
-        <div className="text-red-600 py-4">
+        <div className="py-4 text-red-600">
           {errors.message && <p>{errors.message}</p>}
         </div>
 
         <p className="font-light">
-          ¿Ya tienes una cuenta?{' '}
-          <span className="font-medium  hover:text-primaryColor transition">
+          ¿Ya tienes una cuenta?
+          <span className="mx-2 font-medium transition hover:text-primaryColor">
             <Link to="/login">Inicia Sesion aquí</Link>
           </span>
         </p>

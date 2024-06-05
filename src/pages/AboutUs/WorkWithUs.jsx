@@ -13,7 +13,7 @@ export default function WorkWithUs() {
         Si buscas ser parte de la familia Charles escríbenos y pregunta por las
         ofertas disponibles.
       </p>
-      <div className="flex my-12">
+      <div className="my-12 flex">
         <img
           src="/image.png"
           alt="Foto"
@@ -21,7 +21,7 @@ export default function WorkWithUs() {
           height={450}
           className="aspect-[25:29]"
         />
-        <div className="flex flex-col justify-center items-center text-balance text-center">
+        <div className="flex flex-col items-center justify-center text-balance text-center">
           <h4 className="text-xl font-bold italic">¡Te Estamos Buscando! 🌟</h4>
           <p>
             En busca de personas apasionadas y talentosas que deseen unirse a

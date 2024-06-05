@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import {
   InventoryIcon,
   LogoutUser,
@@ -7,21 +7,14 @@ import {
   UsersIcons,
   ViewDashboardIcon,
 } from '../../icons/Icons'
-import { useUser } from '../hooks/useUser'
-import { NavLink } from 'react-router-dom'
 import CustomNavLink from '../CustomNavLink'
+import { useUser } from '../../hooks/useUser'
 
 function AsideAdmin() {
   const { logout } = useUser()
-  const navigate = useNavigate()
-
-  const logoutUser = () => {
-    logout()
-    navigate('/')
-  }
 
   return (
-    <aside className="flex-none w-3/12 flex flex-col items-center py-4 fixed h-screen border-r-2">
+    <aside className="fixed flex h-screen w-3/12 flex-none flex-col items-center border-r-2 py-4">
       <header>
         <Link to="dashboard">
           <img
@@ -31,8 +24,8 @@ function AsideAdmin() {
           />
         </Link>
       </header>
-      <nav className="w-full h-screen flex flex-col justify-between">
-        <ul className="*:p-3 *:rounded-md flex flex-col gap-2 m-8 font-semibold border-b-2 [&>a>li]:inline-flex [&>a>li]:items-center">
+      <nav className="flex h-screen w-full flex-col justify-between">
+        <ul className="m-8 flex flex-col gap-2 border-b-2 font-semibold *:rounded-md *:p-3 [&>a>li]:inline-flex [&>a>li]:items-center">
           <CustomNavLink to="dashboard">
             <ViewDashboardIcon />
             Vista
@@ -63,10 +56,10 @@ function AsideAdmin() {
             Clientes
           </CustomNavLink>
 
-          <NavLink>
-            <OrdersIcon />
-            <li>Pedidos</li>
-          </NavLink>
+          <CustomNavLink to="orders">
+            <OrdersIcon className="mr-2" />
+            Pedidos
+          </CustomNavLink>
 
           <NavLink>
             <li>Facturación electronica</li>
@@ -75,10 +68,10 @@ function AsideAdmin() {
             <li>Recursos humanos</li>
           </NavLink>
         </ul>
-        <ul className="text-red-600 p-4 rounded-md m-4 text-end font-semibold">
+        <ul className="m-4 rounded-md p-4 text-end font-semibold text-red-600">
           <li className="flex gap-x-2">
             <LogoutUser />
-            <button onClick={logoutUser}>Cerrar sesión</button>
+            <button onClick={logout}>Cerrar sesión</button>
           </li>
         </ul>
       </nav>

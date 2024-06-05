@@ -1,31 +1,27 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Toaster, toast } from 'react-hot-toast'
-import { infoInputInventory } from '../Utils/InfoInputInventory'
+import axiosInstance from '../../../utils/axiosConfig'
 import CustomInput from '../CustomInput'
-import axios from 'axios'
+import { infoInputInventory } from '../utils/InfoInputInventory'
 
 let initialInventory = {
-  stock: 0,
   classification: '',
   lot: 0,
-  minStock: 0,
   maxStock: 0,
+  minStock: 0,
   status: '',
+  stock: 0,
 }
 
 function AddInventory({ setIsOpen, setInventoryList, inventoryList, isEdit }) {
   const [formData, setFormData] = useState(initialInventory)
-  const [productsList, setProductsList] = useState([])
   const [productSelect, setProductSelect] = useState(null)
-
-  console.log(productSelect)
+  const [productsList, setProductsList] = useState([])
 
   useEffect(() => {
     const fetchProductsWithoutInventory = async () => {
       try {
-        const response = await axios.get(
-          'http://localhost:8080/api/v1/products/inventory'
-        )
+        const response = await axiosInstance.get('/products/inventory')
         setProductsList(response.data)
       } catch (error) {
         console.log('Error al cargar los proveedores:', error)
@@ -39,12 +35,12 @@ function AddInventory({ setIsOpen, setInventoryList, inventoryList, isEdit }) {
     setFormData((prevState) => ({
       ...prevState,
       [name]:
-        name === 'stock' ||
+        name === 'buyPrice' ||
+        name === 'lot' ||
         name === 'maxStock' ||
         name === 'minStock' ||
-        name === 'buyPrice' ||
         name === 'sellPrice' ||
-        name === 'lot'
+        name === 'stock'
           ? Number(value)
           : value,
     }))
@@ -57,14 +53,11 @@ function AddInventory({ setIsOpen, setInventoryList, inventoryList, isEdit }) {
 
     try {
       const response = isEdit
-        ? await axios.put(
-            `http://localhost:8080/api/v1/inventory/${isEdit.providerId}/update`,
+        ? await axiosInstance.put(
+            `/inventory/${isEdit.providerId}/update`,
             formData
           )
-        : await axios.post(
-            `http://localhost:8080/api/v1/inventory/${productSelect}`,
-            formData
-          )
+        : await axiosInstance.post(`/inventory/${productSelect}`, formData)
       console.log(response)
       if (isEdit) {
         const findInventory = inventoryList.map((inventory) =>
@@ -86,15 +79,15 @@ function AddInventory({ setIsOpen, setInventoryList, inventoryList, isEdit }) {
   }
 
   return (
-    <div className="fixed top-0 left-0 z-10 w-full h-full flex justify-center items-center bg-gray-900 bg-opacity-70">
+    <div className="fixed left-0 top-0 z-10 flex h-full w-full items-center justify-center bg-gray-900 bg-opacity-70">
       <Toaster />
       <form
         onSubmit={handleSubmitForm}
-        className="grid-cols-2 grid gap-x-12 gap-y-1 bg-white p-10 rounded-lg relative"
+        className="relative grid grid-cols-2 gap-x-12 gap-y-1 rounded-lg bg-white p-10"
       >
         <button
           onClick={() => setIsOpen(false)}
-          className="text-white font-semibolds absolute right-4 top-4 bg-primaryColor hover:bg-primaryColor/90 py-1 px-2 rounded-md"
+          className="font-semibolds absolute right-4 top-4 rounded-md bg-primaryColor px-2 py-1 text-white hover:bg-primaryColor/90"
         >
           X
         </button>
@@ -102,12 +95,12 @@ function AddInventory({ setIsOpen, setInventoryList, inventoryList, isEdit }) {
         <label htmlFor="select-product">
           Productos
           <select
-            required
-            onChange={(e) => setProductSelect(e.target.value)}
-            name="product"
-            id="select-product"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 disabled:bg-gray-400"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 disabled:bg-gray-400"
             defaultValue={productSelect}
+            id="select-product"
+            name="product"
+            onChange={(e) => setProductSelect(e.target.value)}
+            required
           >
             <option value="" selected disabled>
               Escoge un producto
@@ -122,21 +115,20 @@ function AddInventory({ setIsOpen, setInventoryList, inventoryList, isEdit }) {
 
         {infoInputInventory.map((infoInput) => (
           <CustomInput
-            required
-            key={infoInput.id}
-            id={infoInput.id}
-            onChange={handleChange}
-            type={infoInput.type}
-            label={infoInput.label}
-            placeholder={infoInput.placeholder}
             defaultValue={formData[infoInput.id] || ''}
+            id={infoInput.id}
+            key={infoInput.id}
+            label={infoInput.label}
+            onChange={handleChange}
+            placeholder={infoInput.placeholder}
+            required
+            type={infoInput.type}
           />
         ))}
 
         <button
           type="submit"
-          className="text-white col-span-2 bg-primaryColor hover:bg-primaryColor/90 focus:ring-4 focus:outline-none
-                   focus:ring-primaryColor/50 font-medium gap-x-1 rounded-lg text-sm py-2 items-center px-4 flex-grow inline-flex justify-center w-full my-2"
+          className="col-span-2 my-2 inline-flex w-full flex-grow items-center justify-center gap-x-1 rounded-lg bg-primaryColor px-4 py-2 text-sm font-medium text-white hover:bg-primaryColor/90 focus:outline-none focus:ring-4 focus:ring-primaryColor/50"
         >
           {isEdit ? 'Actualizar inventario' : 'Crear inventario'}
         </button>

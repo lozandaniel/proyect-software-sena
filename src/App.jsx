@@ -1,19 +1,20 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from './pages/Home'
-import Error from './pages/Error'
-import Layout from './layout/Layout'
-import Products from './pages/Products'
-import AboutUs from './pages/AboutUs'
-import Login from './pages/Login'
-import Register from './pages/Register'
-import Contact from './pages/Contact'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import ViewAdmin from './components/Admin/ViewAdmin'
-import Cart from './components/ShoppingCart/Cart'
-import { UserProvider } from './context/UserContext'
 import InfoProduct from './components/Products/InfoProduct'
-import CartProvider from './context/CartContext'
+import Cart from './components/ShoppingCart/Cart'
 import CheckoutPage from './components/ShoppingCart/CheckoutPage'
+import OrderCard from './components/ShoppingCart/OrderCard'
+import CartProvider from './context/CartContext'
+import { UserProvider } from './context/UserContext'
+import Layout from './layout/Layout'
+import AboutUs from './pages/AboutUs'
+import Contact from './pages/Contact'
+import Error from './pages/Error'
+import Home from './pages/Home'
+import Login from './pages/Login'
+import Products from './pages/Products'
 import ProfileUser from './pages/ProfileUser'
+import Register from './pages/Register'
 
 /* Rutas principales */
 function App() {
@@ -28,9 +29,10 @@ function App() {
               <Route path="/view/admin/*" element={<ViewAdmin />} />
               <Route element={<Layout />}>
                 <Route path="/" element={<Home />} />
-                <Route path="/view/profile" element={<ProfileUser />} />
+                <Route path="/view/profile/*" element={<ProfileUser />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<CheckoutPage />} />
+                <Route path="/order/:orderId" element={<OrderCard />} />
                 <Route path="/products" element={<Products />} />
                 <Route path="/products/:id" element={<InfoProduct />} />
                 <Route path="/quienes-somos/*" element={<AboutUs />} />

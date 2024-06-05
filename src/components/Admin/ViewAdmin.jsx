@@ -1,22 +1,24 @@
-import { Routes, Route } from 'react-router-dom'
-import Provider from './Providers/Provider'
-import Client from './Clients/Client'
-import ProductsInfo from './Products/ProductsInfo'
-import Dashboard from './Dashboard'
+import { Route, Routes } from 'react-router-dom'
 import AsideAdmin from './AsideAdmin'
+import Client from './Clients/Client'
+import Dashboard from './Dashboard'
 import Inventory from './Inventory/Inventory'
+import Orders from './Order/Orders'
+import ProductsInfo from './Products/ProductsInfo'
+import Provider from './Providers/Provider'
 
 function ViewAdmin() {
   return (
     <div className="flex h-screen bg-gray-100">
       <AsideAdmin />
-      <main className="flex-1 py-12 px-14 ml-[25%] overflow-x-auto ">
+      <main className="ml-[25%] flex-1 overflow-x-auto px-14 py-12">
         <Routes>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="inventory/*" element={<Inventory />} />
           <Route path="inventory/products" element={<ProductsInfo />} />
           <Route path="providers" element={<Provider />} />
           <Route path="clients" element={<Client />} />
+          <Route path="orders" element={<Orders />} />
         </Routes>
       </main>
     </div>

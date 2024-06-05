@@ -2,22 +2,22 @@ import { Link } from 'react-router-dom'
 
 export default function Footer() {
   return (
-    <footer className="container mx-auto border-t-2 pt-8 my-2">
+    <footer className="container mx-auto border-t-2 pt-8">
       <h3 className="text-center text-3xl font-bold text-primaryColor">
         Nuestros favoritos recomendados
       </h3>
-      <div className="justify-center flex border-b-2 py-8">
-        <div className="lg:flex flex-col justify-center items-center flex-1 hidden">
+      <div className="flex justify-center border-b-2 py-8">
+        <div className="hidden flex-1 flex-col items-center justify-center lg:flex">
           <img
-            src="/logo-distriquesos.png"
             alt="Icono de empresa"
             className="w-72"
+            src="/logo-distriquesos.png"
           />
           <p>Comunicate al servicio al cliente</p>
           <span>(601) 717 98 63</span>
         </div>
 
-        <div className="flex justify-center gap-x-10 flex-auto">
+        <div className="flex flex-auto justify-center gap-x-10">
           <ul>
             <li className="font-semibold">Conocenos</li>
             <li>
@@ -68,7 +68,7 @@ export default function Footer() {
           </ul>
         </div>
       </div>
-      <p className="text-neutral-500 my-8">
+      <p className="my-8 text-neutral-500">
         ©2024 DistriQuesos Charles. Todos los derechos reservados.
       </p>
     </footer>

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import CustomInput from '../CustomInput'
+import React, { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
-import axios from 'axios'
-import { infoInputProduct } from '../Utils/InfoInputProduct'
+import axiosInstance from '../../../utils/axiosConfig'
+import { categoryList } from '../../../utils/categoryList'
+import CustomInput from '../CustomInput'
+import { infoInputProduct } from '../utils/InfoInputProduct'
 
 interface Product {
   provider: {
@@ -29,34 +30,18 @@ let initialProduct: Product = {
 }
 
 function AddProductForm({
-  setIsOpen,
-  setListProducts,
   listProducts,
   productToEdit,
+  setIsOpen,
+  setListProducts,
 }) {
   const [newProduct, setNewProduct] = useState<Product>(initialProduct)
   const [providersList, setProvidersList] = useState<any[]>([])
 
-  const categoryList = [
-    'Lácteos',
-    'Panadería y Repostería',
-    'Productos Frescos',
-    'Carnes y Embutidos',
-    'Conservas',
-    'Gourmet',
-    'Bebidas',
-    'Harinas',
-    'Aceites',
-    'Levaduras',
-    'Repostería',
-  ]
-
   useEffect(() => {
     const fetchProviders = async () => {
       try {
-        const response = await axios.get(
-          'http://localhost:8080/api/v1/providers'
-        )
+        const response = await axiosInstance.get('/providers')
         setProvidersList(response.data)
       } catch (error) {
         console.log('Error al cargar los proveedores:', error)
@@ -103,13 +88,14 @@ function AddProductForm({
 
     try {
       const response = productToEdit
-        ? await axios.put(
-            `http://localhost:8080/api/v1/products/${productToEdit.productId}/update`,
+        ? await axiosInstance.put(
+            `/products/${productToEdit.productId}/update`,
             newProduct
           )
-        : await axios.post('http://localhost:8080/api/v1/products', newProduct)
+        : await axiosInstance.post('/products', newProduct)
 
       const responseData = response.data
+      console.log(responseData)
 
       if (productToEdit) {
         setListProducts(
@@ -137,28 +123,28 @@ function AddProductForm({
   }
 
   return (
-    <div className="fixed top-0 left-0 z-10 w-full h-full flex justify-center items-center bg-gray-900 bg-opacity-70">
+    <div className="fixed left-0 top-0 z-10 flex h-full w-full items-center justify-center bg-gray-900 bg-opacity-70">
       <Toaster />
       <form
         onSubmit={handleSubmitProduct}
-        className="grid-cols-2 grid gap-x-16 gap-y-1 bg-white p-10 rounded-lg relative"
+        className="relative grid grid-cols-2 gap-x-16 gap-y-1 rounded-lg bg-white p-10"
       >
         <button
           onClick={() => setIsOpen(false)}
-          className="text-white font-semibolds absolute right-4 top-4 bg-primaryColor hover:bg-primaryColor/90 py-1 px-2 rounded-md"
+          className="absolute right-4 top-4 rounded-md bg-primaryColor px-2 py-1 font-semibold text-white hover:bg-primaryColor/90"
         >
           X
         </button>
         <label htmlFor="select-provider">
           Proveedor
           <select
-            required
-            disabled={productToEdit}
-            onChange={handleChange}
-            name="provider"
-            id="select-provider"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 disabled:bg-gray-400"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 disabled:bg-gray-400"
             defaultValue={productToEdit ? newProduct.provider : ''}
+            disabled={productToEdit}
+            id="select-provider"
+            name="provider"
+            onChange={handleChange}
+            required
           >
             <option value="" selected disabled>
               Escoge un proveedor
@@ -173,12 +159,13 @@ function AddProductForm({
 
         {infoInputProduct.map((camp) => (
           <CustomInput
-            required
-            key={camp.id}
-            onChange={handleChange}
             id={camp.id}
+            key={camp.id}
             label={camp.label}
+            onChange={handleChange}
             placeholder={camp.placeholder}
+            required
+            styleLabel=""
             type={camp.type}
             value={newProduct[camp.id]}
           />
@@ -187,11 +174,11 @@ function AddProductForm({
         <label htmlFor="select-provider">
           Categoria:
           <select
-            required
-            onChange={handleChange}
-            name="category"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
             id="select-category"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+            name="category"
+            onChange={handleChange}
+            required
             value={newProduct.category}
           >
             <option value="" selected disabled>
@@ -208,19 +195,18 @@ function AddProductForm({
         <div className="col-span-2">
           <label htmlFor="description">Descripción</label>
           <textarea
-            onChange={handleChange}
+            className="inline-block w-full resize-none rounded-md border border-neutral-200 bg-gray-50 p-2.5 text-sm text-gray-900 outline-none focus:ring-1 focus:ring-blue-500"
             id="description"
             name="description"
-            rows={6}
-            className="inline-block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-md border border-neutral-200 focus:ring-blue-500  focus:ring-1 resize-none outline-none"
+            onChange={handleChange}
             placeholder="Ingrese una breve descripción"
+            rows={6}
             value={newProduct.description}
           ></textarea>
         </div>
         <button
+          className="col-span-2 my-2 inline-flex w-full flex-grow items-center justify-center gap-x-1 rounded-lg bg-primaryColor px-4 py-2 text-sm font-medium text-white hover:bg-primaryColor/90 focus:outline-none focus:ring-4 focus:ring-primaryColor/50"
           type="submit"
-          className="text-white col-span-2 bg-primaryColor hover:bg-primaryColor/90 focus:ring-4 focus:outline-none
-                   focus:ring-primaryColor/50 font-medium gap-x-1 rounded-lg text-sm py-2 items-center px-4 flex-grow inline-flex justify-center w-full my-2"
         >
           {productToEdit ? 'Guardar Producto' : 'Crear Producto'}
         </button>

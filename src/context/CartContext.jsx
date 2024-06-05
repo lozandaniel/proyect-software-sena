@@ -1,5 +1,4 @@
-import { useEffect } from 'react'
-import { useState, createContext } from 'react'
+import { createContext, useEffect, useState } from 'react'
 
 export const CartContext = createContext()
 
@@ -9,9 +8,12 @@ function CartProvider({ children }) {
 
   const addCart = (product, quantity = 1) => {
     setCartItems((prevState) => {
+      // Verificar si el producto ya existe en el listado con el estado anterior
       const existingProduct = prevState.find(
         (item) => item.productId === product.productId
       )
+
+      // Logica si el producto ya existe
       if (existingProduct) {
         return prevState.map((item) =>
           item.productId === product.productId
@@ -55,12 +57,12 @@ function CartProvider({ children }) {
   return (
     <CartContext.Provider
       value={{
-        cartItems,
-        totalCart,
-        setCartItems,
         addCart,
-        deleteProduct,
+        cartItems,
         cleanCart,
+        deleteProduct,
+        setCartItems,
+        totalCart,
         updateQuantity,
       }}
     >

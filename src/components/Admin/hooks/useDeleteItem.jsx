@@ -1,9 +1,9 @@
-import axios from 'axios'
+import axiosInstance from '../../../utils/axiosConfig'
 
 const useDeleteItem = () => {
-  const deleteItem = async (url) => {
+  const deleteItem = async (path) => {
     try {
-      const response = await axios.delete(url)
+      const response = await axiosInstance.delete(path)
       return response.data
     } catch (error) {
       console.log('Error eliminado el producto: ', error)

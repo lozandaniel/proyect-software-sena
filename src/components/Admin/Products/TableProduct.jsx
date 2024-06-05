@@ -1,29 +1,28 @@
-import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast'
+import axiosInstance from '../../../utils/axiosConfig'
 
 function TableProduct({ setListProducts, listProducts, onEditClick }) {
   const handleDeleteProduct = async (id) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:8080/api/v1/products/${id}`
-      )
+      const response = await axiosInstance.delete(`/products/${id}`)
       const filteredProduct = listProducts.filter(
         (product) => product.productId !== id
       )
+      console.log(response)
       setListProducts(filteredProduct)
       toast(response.data.message, {
         position: 'top-right',
       })
     } catch (error) {
-      toast.error(error)
+      console.log(error)
     }
   }
 
   return (
-    <div className="sm:rounded-lg my-4 overflow-x-auto p-4 bg-white">
+    <div className="my-4 overflow-x-auto bg-white p-4 sm:rounded-lg">
       <Toaster />
-      <table className="w-full border-collapse border text-sm text-left table-auto">
-        <thead className="bg-primaryColor/80 text-xs text-gray-700 uppercase">
+      <table className="w-full table-auto border-collapse border text-left text-sm">
+        <thead className="bg-primaryColor/80 text-xs uppercase text-gray-700">
           <tr>
             <th className="px-4 py-2">ID</th>
             <th className="px-4 py-2">Nombre Proveedor</th>
@@ -38,7 +37,7 @@ function TableProduct({ setListProducts, listProducts, onEditClick }) {
         </thead>
         <tbody>
           {listProducts.map((product) => (
-            <tr key={product?.productId} className="bg-white border-b">
+            <tr key={product?.productId} className="border-b bg-white">
               <th className="px-4 py-2">{product?.productId}</th>
               <td className="px-4 py-2">{product?.provider?.name}</td>
               <td className="px-4 py-2">{product?.name}</td>
@@ -47,7 +46,7 @@ function TableProduct({ setListProducts, listProducts, onEditClick }) {
               <td className="px-4 py-2">{product?.category}</td>
               <td className="px-4 py-2">{product?.quantity}</td>
               <td className="px-4 py-2">{product?.imageUrl}</td>
-              <td className="px-4 py-2 flex flex-row gap-x-2">
+              <td className="flex flex-row gap-x-2 px-4 py-2">
                 <button
                   onClick={() => onEditClick(product)}
                   className="font-medium text-blue-600 hover:underline"

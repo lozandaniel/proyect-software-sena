@@ -4,7 +4,7 @@ function NavMenu() {
   // Menu de navegación
   return (
     <nav className="mx-8">
-      <ul className="flex justify-center items-center gap-x-4 font-semibold whitespace-nowrap">
+      <ul className="flex items-center justify-center gap-x-4 whitespace-nowrap font-semibold">
         <li>
           <NavLink
             to="/"

@@ -1,29 +1,37 @@
-import { useState } from 'react'
-import { useEffect } from 'react'
-import { createContext } from 'react'
+import { useState, useEffect, createContext } from 'react'
+import axiosInstance from '../utils/axiosConfig'
+import { useNavigate } from 'react-router-dom'
 
 export const UserContext = createContext()
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [isAdmin, setIsAdmin] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('userInfo')
-    if (storedUser) {
-      const parsedUser = JSON.parse(storedUser)
-      console.log(parsedUser)
-      setUser(parsedUser)
-      setIsAdmin(parsedUser?.rol?.rol === 'admin')
+    const fetchInfoUser = async () => {
+      try {
+        const response = await axiosInstance.get('/clients/info')
+        setUser(response.data)
+        setIsAdmin(response.data?.rol?.rol === 'admin')
+      } catch (error) {
+        setUser(null)
+        console.error(error)
+      }
     }
+    fetchInfoUser()
   }, [])
 
-  console.log(user)
-
-  const logout = () => {
-    setUser(null)
-    setIsAdmin(false)
-    localStorage.removeItem('userInfo')
+  const logout = async () => {
+    try {
+      await axiosInstance.post('/user/logout')
+      setUser(null)
+      setIsAdmin(false)
+      navigate('/')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (

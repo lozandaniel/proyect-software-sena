@@ -3,12 +3,12 @@ import { SearchIcon } from '../../icons/Icons'
 /* Componente del campo de busqueda */
 function InputSearch() {
   return (
-    <div className="bg-neutral-100 h-9 w-80 items-center gap-2 ps-2 rounded-md hidden lg:flex">
+    <div className="hidden h-9 w-80 items-center gap-2 rounded-md bg-neutral-100 ps-2 lg:flex">
       <SearchIcon />
       <input
-        type="search"
+        className="items flex h-9 w-full items-center rounded-md border-transparent bg-neutral-100 outline-none"
         placeholder="Buscar"
-        className="bg-neutral-100 h-9 w-full items border-transparent rounded-md outline-none flex items-center"
+        type="search"
       />
     </div>
   )

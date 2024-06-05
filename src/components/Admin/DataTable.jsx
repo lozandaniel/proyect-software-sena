@@ -7,8 +7,6 @@ function DataTable({ data, rowKey, deleteRow, onEditClick, columns }) {
 
   // Esta constante permite obtener las keys de el objeto de datos
 
-  console.log(data)
-
   const handleDeleteRow = (id) => {
     if (window.confirm('Seguro que quieres eliminarlo?')) {
       deleteRow(id)
@@ -22,9 +20,9 @@ function DataTable({ data, rowKey, deleteRow, onEditClick, columns }) {
   }
 
   return (
-    <section className="my-4 p-4 bg-white sm:rounded-lg overflow-x-auto">
-      <table className="w-full border-collapse border text-sm text-left table-auto">
-        <thead className="bg-primaryColor/80 text-xs text-gray-700 uppercase">
+    <section className="my-4 overflow-x-auto bg-white p-4 sm:rounded-lg">
+      <table className="w-full table-auto border-collapse border text-left text-sm">
+        <thead className="bg-primaryColor/80 text-xs uppercase text-gray-700">
           <tr>
             {columns.map((colName) => (
               <th key={colName} scope="col" className="px-4 py-2">
@@ -38,19 +36,19 @@ function DataTable({ data, rowKey, deleteRow, onEditClick, columns }) {
         </thead>
         <tbody>
           {data.map((row) => (
-            <tr className="bg-white border-b" key={row[rowKey]}>
+            <tr className="border-b bg-white" key={row[rowKey]}>
               {columns.map((columnName) => (
                 <td key={columnName} className="px-4 py-2">
                   {/* Se recorre cada columna, para traer sus datos */}
                   {getNestedValue(row, columnName)}
                 </td>
               ))}
-              <td className="px-4 py-2 flex flex-row gap-x-2">
+              <td className="flex flex-row gap-x-2 px-4 py-2">
                 <button
-                  onClick={() => onEditClick(row)}
                   className="font-medium text-blue-600 hover:underline"
+                  onClick={() => onEditClick(row)}
                 >
-                  <InputCategory className="bg-[#B3E5FC] text-primaryColors">
+                  <InputCategory className="text-primaryColors bg-[#B3E5FC]">
                     <EditIcon />
                     Editar
                   </InputCategory>

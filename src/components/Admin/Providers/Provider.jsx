@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { AddPlusIcon } from '../../../icons/Icons'
-import AddProviderModal from './AddProviderModal'
-import DataTable from '../DataTable'
 import { Toaster, toast } from 'react-hot-toast'
-import axios from 'axios'
+import { AddPlusIcon } from '../../../icons/Icons'
+import axiosInstance from '../../../utils/axiosConfig'
+import DataTable from '../DataTable'
+import AddProviderModal from './AddProviderModal'
 
 let initialProvider = [
   {
@@ -30,9 +30,7 @@ function Provider() {
   useEffect(() => {
     const fetchProvider = async () => {
       try {
-        const response = await axios.get(
-          'http://localhost:8080/api/v1/providers'
-        )
+        const response = await axiosInstance.get('/providers')
         setProviderList(response.data)
       } catch (error) {
         console.error('Error fetching provider table:', error)
@@ -50,9 +48,7 @@ function Provider() {
 
   const deleteRow = async (id) => {
     try {
-      const res = await axios.delete(
-        `http://localhost:8080/api/v1/providers/${id}`
-      )
+      const res = await axiosInstance.delete(`/providers/${id}`)
       const filterProviders = providerList.filter(
         (provider) => provider.providerId != id
       )
@@ -78,8 +74,8 @@ function Provider() {
         </p>
       </header>
 
-      <section className="flex gap-x-4 items-center justify-between">
-        <div className="bg-red-700 hover:bg-red-700/90 pointer-events-none py-10 px-14 font-semibold text-xl flex flex-col text-center rounded-lg text-white">
+      <section className="flex items-center justify-between gap-x-4">
+        <div className="pointer-events-none flex flex-col rounded-lg bg-red-700 px-14 py-10 text-center text-xl font-semibold text-white hover:bg-red-700/90">
           Total de proveedores
           <span>{providerList.length}</span>
         </div>
@@ -87,8 +83,7 @@ function Provider() {
         <button
           onClick={openModal}
           type="button"
-          className="text-white bg-primaryColor hover:bg-primaryColor/90 focus:ring-2 focus:outline-none
-                   focus:ring-primaryColor/50 font-medium gap-x-1 rounded-lg text-sm py-2 items-center px-4 justify-center inline-flex self-end"
+          className="inline-flex items-center justify-center gap-x-1 self-end rounded-lg bg-primaryColor px-4 py-2 text-sm font-medium text-white hover:bg-primaryColor/90 focus:outline-none focus:ring-2 focus:ring-primaryColor/50"
         >
           <AddPlusIcon />
           Agregar nuevo proveedor
@@ -97,19 +92,15 @@ function Provider() {
 
       {isOpen && (
         <AddProviderModal
-          setIsOpen={setIsOpen}
           initialData={initialProvider}
-          setProviderList={setProviderList}
-          providerList={providerList}
           isEdit={isEdit}
+          providerList={providerList}
+          setIsOpen={setIsOpen}
+          setProviderList={setProviderList}
         />
       )}
 
       <DataTable
-        data={providerList}
-        rowKey="providerId"
-        deleteRow={deleteRow}
-        onEditClick={handleEdit}
         columns={[
           'providerId',
           'name',
@@ -118,6 +109,10 @@ function Provider() {
           'direction',
           'city',
         ]}
+        data={providerList}
+        deleteRow={deleteRow}
+        onEditClick={handleEdit}
+        rowKey="providerId"
       />
     </div>
   )

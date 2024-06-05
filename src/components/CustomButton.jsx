@@ -1,9 +1,9 @@
 function CustomButton({ className, children, ...rest }) {
   return (
     <button
-      {...rest}
+      className={`my-10 items-center rounded-lg bg-primaryColor px-4 py-2 text-sm font-medium text-white hover:bg-primaryColor/90 focus:outline-none focus:ring-2 focus:ring-primaryColor/50 ${className}`}
       type="button"
-      className={`bg-primaryColor focus:outline-none focus:ring-2 focus:ring-primaryColor/50 font-medium hover:bg-primaryColor/90 items-center my-10 px-4 py-2 rounded-lg text-sm text-white ${className}`}
+      {...rest}
     >
       {children}
     </button>

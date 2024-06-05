@@ -1,21 +1,21 @@
-import { useCart } from '../hooks/useCart'
+import { useCart } from '../../hooks/useCart'
 
 function OrderSummary() {
   const { cartItems, totalCart } = useCart()
 
   return (
-    <div className="flex-none w-4/12 bg-neutral-100 my-11 mx-2 p-8 rounded-lg">
+    <div className="mx-2 my-11 w-4/12 flex-none rounded-lg bg-neutral-100 p-8">
       <header>
         <h3 className="text-lg font-bold">Resumen del pedido</h3>
       </header>
-      <div className="flex flex-col h-full justify-between">
+      <div className="flex h-full flex-col justify-between">
         <section className="flex-1 overflow-y-auto">
           {cartItems.map((item) => (
             <article
               key={item.productId}
-              className="border-b-2 flex items-center py-4"
+              className="flex items-center border-b-2 py-4"
             >
-              <div className="flex items-center justify-center w-36">
+              <div className="flex w-36 items-center justify-center">
                 <img src={item.imageUrl} alt={item.name} />
               </div>
               <div className="flex flex-col">
@@ -26,7 +26,7 @@ function OrderSummary() {
             </article>
           ))}
         </section>
-        <section className="py-2 flex justify-between">
+        <section className="flex justify-between py-2">
           <h4 className="text-md font-bold">Total</h4>
           <span className="font-semibold tracking-widest">${totalCart}</span>
         </section>

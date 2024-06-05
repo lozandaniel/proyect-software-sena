@@ -1,14 +1,14 @@
-import { Routes, Route, NavLink } from 'react-router-dom'
+import { NavLink, Route, Routes } from 'react-router-dom'
+import About from './AboutUs/About'
 import WorkWithUs from './AboutUs/WorkWithUs'
 import Error from './Error'
-import About from './AboutUs/About'
 
 export default function AboutUs() {
   return (
     <>
-      <div className="flex w-full my-14 flex-col md:flex-row">
-        <aside className="md:w-2/5 w-full font-bold text-left md:flex-col items-center">
-          <ul className="gap-4 flex flex-row md:flex-col items-center justify-center md:justify-start my-6 md:my-0">
+      <div className="my-14 flex w-full flex-col md:flex-row">
+        <aside className="w-full items-center text-left font-bold md:w-2/5 md:flex-col">
+          <ul className="my-6 flex flex-row items-center justify-center gap-4 md:my-0 md:flex-col md:justify-start">
             <li>
               <NavLink to="/quienes-somos">¿Quienes Somos?</NavLink>
             </li>

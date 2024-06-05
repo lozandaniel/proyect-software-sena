@@ -1,26 +1,21 @@
 import { useEffect, useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
+import { useCart } from '../../hooks/useCart'
 import { ShoppingCartIcon } from '../../icons/Icons'
-import axios from 'axios'
-import { useCart } from '../hooks/useCart'
-import { Toaster } from 'react-hot-toast'
-import toast from 'react-hot-toast'
+import axiosInstance from '../../utils/axiosConfig'
 
 function InfoProduct() {
-  const { addCart } = useCart()
   const [product, setProduct] = useState(null)
+  const { addCart } = useCart()
 
   /* Id buscado */
   const { id } = useParams()
-  console.log(id)
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:8080/api/v1/products/${id}`
-        )
-        console.log(res.data)
+        const res = await axiosInstance.get(`/products/${id}`)
         setProduct(res.data)
       } catch (error) {
         console.error('Failed to fetch product:', error)
@@ -34,7 +29,7 @@ function InfoProduct() {
     addCart(product)
     toast.success('Producto añadido al carrito', {
       iconTheme: '#0070F0',
-      position: 'top-right',
+      position: 'top-center',
     })
   }
 
@@ -49,47 +44,47 @@ function InfoProduct() {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row py-32">
+      <div className="flex flex-col py-32 md:flex-row">
         <Toaster />
-        <div className="md:flex-1 px-4 flex flex-col items-center justify-center">
+        <section className="flex flex-col items-center justify-center px-4 md:flex-1">
           <img
             src={`/${product?.imageUrl}`}
             alt={product?.name}
-            className="mb-4 transition-all max-w-96 max-h-96"
+            className="mb-4 max-h-96 max-w-96 transition-all"
           />
           <div className="grid grid-cols-5 gap-4">
             <div key={product?.productId} className="size-28">
               <img
                 src={`/${product?.imageUrl}`}
-                className="w-full h-full object-cover"
+                className="h-full w-full object-cover"
                 alt="Hola"
               />
             </div>
           </div>
-        </div>
-        <div className="md:flex-1 px-10 bg-neutral-100 rounded-md py-4 self-start">
-          <div className="inline-flex justify-between w-full">
-            <h2 className="text-2xl font-bold ">{product?.name}</h2>
+        </section>
+        <section className="self-start rounded-md bg-neutral-100 px-10 py-4 md:flex-1">
+          <div className="inline-flex w-full justify-between">
+            <h2 className="text-2xl font-bold">{product?.name}</h2>
           </div>
-          <div className="flex my-2 justify-between">
+          <div className="my-2 flex justify-between">
             <div>
-              <span className="font-bold text-gray-700 ">Precio: </span>
-              <span className="text-gray-600 ">${product?.price}</span>
+              <span className="font-bold text-gray-700">Precio: </span>
+              <span className="text-gray-600">${product?.price}</span>
             </div>
             <div>
-              <span className="font-bold text-gray-700 ">
-                Unidades disponibles:
+              <span className="font-bold text-gray-700">
+                Unidades disponibles
               </span>
               <span className="text-gray-600"> {product?.quantity}</span>
             </div>
           </div>
           <div>
-            <span className="font-bold text-gray-700 ">
+            <span className="font-bold text-gray-700">
               Descripción del producto
             </span>
-            <p className="text-gray-600 mt-2">{product?.description}</p>
+            <p className="mt-2 text-gray-600">{product?.description}</p>
           </div>
-          <div className="flex flex-col my-4">
+          <div className="my-4 flex flex-col">
             <span className="font-semibold text-gray-700">
               Codigo: {product?.productId}
             </span>
@@ -99,16 +94,15 @@ function InfoProduct() {
           </div>
           <div className="flex justify-between gap-x-6">
             <button
-              onClick={addProductToCart}
+              className="inline-flex flex-grow items-center justify-center gap-x-1 rounded-lg bg-primaryColor px-4 py-2 text-sm font-medium text-white hover:bg-primaryColor/90 focus:outline-none focus:ring-2 focus:ring-primaryColor/50"
               type="button"
-              className="text-white bg-primaryColor hover:bg-primaryColor/90 focus:ring-4 focus:outline-none
-                   focus:ring-primaryColor/50 font-medium gap-x-1 rounded-lg text-sm py-2 items-center px-4 flex-grow inline-flex justify-center"
+              onClick={addProductToCart}
             >
               <ShoppingCartIcon />
               Añadir al carrito
             </button>
           </div>
-        </div>
+        </section>
       </div>
     </>
   )

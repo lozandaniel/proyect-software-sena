@@ -1,9 +1,10 @@
-import { Outlet, Link } from 'react-router-dom'
-import { UserIcon, ShoppingCartIcon, UserEditIcon } from '../icons/Icons'
+import { Link, Outlet } from 'react-router-dom'
+import Footer from '../components/Footer'
 import InputSearch from '../components/Header/InputSearch'
 import NavMenu from '../components/Header/NavMenu'
-import Footer from '../components/Footer'
-import { useUser } from '../components/hooks/useUser'
+import { useUser } from '../hooks/useUser'
+
+import { ShoppingCartIcon, UserEditIcon, UserIcon } from '../icons/Icons'
 
 /* Layout de la pagina web */
 export default function Layout() {
@@ -11,8 +12,8 @@ export default function Layout() {
 
   return (
     <>
-      <header className="w-full mx-auto flex items-center  px-4 sm:px-8 py-4">
-        <div className="flex items-center flex-1">
+      <header className="mx-auto flex w-full items-center px-4 py-4 sm:px-8">
+        <div className="flex flex-1 items-center">
           <Link to="/">
             <img
               src="/logo-distriquesos.png"
@@ -48,7 +49,7 @@ export default function Layout() {
         </div>
       </header>
 
-      <main className="container mx-auto ">
+      <main className="container mx-auto px-4">
         <Outlet />
       </main>
 
