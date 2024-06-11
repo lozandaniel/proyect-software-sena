@@ -7,13 +7,17 @@ export const UserContext = createContext()
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [isAdmin, setIsAdmin] = useState(false)
+  const [isEmployee, setIsEmployee] = useState(false)
   const navigate = useNavigate()
+
+  console.log(isEmployee)
 
   useEffect(() => {
     const fetchInfoUser = async () => {
       try {
         const response = await axiosInstance.get('/clients/info')
         setUser(response.data)
+        setIsEmployee(response.data?.area != null && response.data?.rol?.rol === "empleado")
         setIsAdmin(response.data?.rol?.rol === 'admin')
       } catch (error) {
         setUser(null)
@@ -27,6 +31,7 @@ export const UserProvider = ({ children }) => {
     try {
       await axiosInstance.post('/user/logout')
       setUser(null)
+      setIsEmployee(false)
       setIsAdmin(false)
       navigate('/')
     } catch (error) {
@@ -35,7 +40,7 @@ export const UserProvider = ({ children }) => {
   }
 
   return (
-    <UserContext.Provider value={{ user, isAdmin, logout }}>
+    <UserContext.Provider value={{ user, isAdmin, isEmployee, logout }}>
       {children}
     </UserContext.Provider>
   )

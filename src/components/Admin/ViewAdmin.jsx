@@ -6,6 +6,7 @@ import Inventory from './Inventory/Inventory'
 import Orders from './Order/Orders'
 import ProductsInfo from './Products/ProductsInfo'
 import Provider from './Providers/Provider'
+import Employee from './Employee/Employee'
 
 function ViewAdmin() {
   return (
@@ -13,12 +14,13 @@ function ViewAdmin() {
       <AsideAdmin />
       <main className="ml-[25%] flex-1 overflow-x-auto px-14 py-12">
         <Routes>
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="inventory/*" element={<Inventory />} />
-          <Route path="inventory/products" element={<ProductsInfo />} />
-          <Route path="providers" element={<Provider />} />
-          <Route path="clients" element={<Client />} />
-          <Route path="orders" element={<Orders />} />
+          <Route path="admin/dashboard" element={<Dashboard />} />
+          <Route path="admin/inventory/*" element={<Inventory />} />
+          <Route path="admin/inventory/products" element={<ProductsInfo />} />
+          <Route path="admin/providers" element={<Provider />} />
+          <Route path="admin/clients" element={<Client />} />
+          <Route path="admin/orders" element={<Orders />} />
+          <Route path="employee/*" element={<Employee />} />
         </Routes>
       </main>
     </div>

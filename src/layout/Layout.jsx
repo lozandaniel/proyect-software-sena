@@ -8,7 +8,7 @@ import { ShoppingCartIcon, UserEditIcon, UserIcon } from '../icons/Icons'
 
 /* Layout de la pagina web */
 export default function Layout() {
-  const { isAdmin, user } = useUser()
+  const { isAdmin, isEmployee, user } = useUser()
 
   return (
     <>
@@ -30,7 +30,7 @@ export default function Layout() {
 
           <div className="flex gap-x-2">
             {user ? (
-              isAdmin ? (
+              isAdmin || isEmployee ? (
                 <Link to="/view/admin/dashboard">Admin</Link>
               ) : (
                 <Link to="/view/profile">

@@ -17,12 +17,20 @@ function Login() {
     e.preventDefault()
     try {
       const response = await axiosInstance.post('/user/login', dataForm)
+      const { data } = response
       console.log(response.data)
-      navigate(
-        response.data.rol.rol === 'admin'
-          ? '/view/admin/dashboard'
-          : '/view/profile'
-      )
+      switch (data.rol.rol) {
+        case 'admin':
+          navigate('/view/admin/dashboard')
+          break
+
+        case 'empleado':
+          navigate('/view/employee')
+          break
+
+        default:
+          navigate('/view/profile')
+      }
     } catch (error) {
       console.log(error.message)
       setErrors(error.response.data)
