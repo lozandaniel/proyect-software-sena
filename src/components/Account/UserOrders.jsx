@@ -12,7 +12,6 @@ function UserOrders() {
     const fetchOrdersByClient = async () => {
       try {
         const response = await axiosInstance.get(`/orders/${user?.clientId}`)
-        console.log(response)
         setListOrders(response.data)
       } catch (error) {
         console.log(error)
@@ -42,7 +41,7 @@ function UserOrders() {
         </thead>
         <tbody>
           {listOrders.length === 0 ? (
-            <h2>Hola</h2>
+            <span className="p-2">Actualmente no cuentas con pedidos!</span>
           ) : (
             listOrders.map((order) => {
               return (

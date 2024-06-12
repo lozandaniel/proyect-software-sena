@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import axiosInstance from '../../utils/axiosConfig'
 import InputCategory from '../InputCategory'
+import { useNavigate } from 'react-router-dom'
 
 function OrderCard() {
   const [infoOrder, setInfoOrder] = useState(null)
   const { orderId } = useParams()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -26,10 +28,7 @@ function OrderCard() {
           Inicio
         </Link>{' '}
         /{' '}
-        <Link
-          className="hover:text-red-700"
-          onClick={() => window.history.back()}
-        >
+        <Link className="hover:text-red-700" onClick={() => navigate(-1)}>
           Volver
         </Link>
       </nav>

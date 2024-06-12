@@ -17,7 +17,9 @@ export const UserProvider = ({ children }) => {
       try {
         const response = await axiosInstance.get('/clients/info')
         setUser(response.data)
-        setIsEmployee(response.data?.area != null && response.data?.rol?.rol === "empleado")
+        setIsEmployee(
+          response.data?.area != null && response.data?.rol?.rol === 'empleado'
+        )
         setIsAdmin(response.data?.rol?.rol === 'admin')
       } catch (error) {
         setUser(null)

@@ -1,37 +1,37 @@
-import { Routes, Route, Link } from 'react-router-dom'
-import { DeleteIcon } from '../icons/Icons'
-import { useUser } from '../hooks/useUser'
-import AccountInfo from '../components/Account/AccountInfo'
+import { Link, Route, Routes } from 'react-router-dom'
 import AccountAdress from '../components/Account/AccountAdress'
+import AccountInfo from '../components/Account/AccountInfo'
 import UserOrders from '../components/Account/UserOrders'
+import { useUser } from '../hooks/useUser'
+import { DeleteIcon } from '../icons/Icons'
 
 function ProfileUser() {
   const { user, logout } = useUser()
 
   if (!user) {
-    return <div>User not authenticated</div>
+    return <div>Usuario no autenticado!</div>
   }
 
   return (
-    <div className="p-6 my-10 flex">
-      <aside className="w-72 mr-16">
-        <nav className="flex flex-col h-full justify-between">
-          <ul className="flex flex-col gap-2 p-3 font-semibold border-b-2">
-            <li className="rounded-md inline-flex items-center">
+    <div className="my-10 flex p-6">
+      <aside className="mr-16 w-72">
+        <nav className="flex h-full flex-col justify-between">
+          <ul className="flex flex-col gap-2 border-b-2 p-3 font-semibold">
+            <li className="inline-flex items-center rounded-md">
               <Link to="/view/profile">Perfil</Link>
             </li>
-            <li className="rounded-md inline-flex items-center">
+            <li className="inline-flex items-center rounded-md">
               <Link to="adress">Direcciones</Link>
             </li>
-            <li className="rounded-md inline-flex items-center">
+            <li className="inline-flex items-center rounded-md">
               <Link to="orders">Pedidos</Link>
             </li>
-            <li className="rounded-md inline-flex items-center">
+            <li className="inline-flex items-center rounded-md">
               <button onClick={logout}>Cerrar Sesión</button>
             </li>
           </ul>
-          <ul className="flex flex-col gap-2 text-red-600 font-semibold mt-auto p-3">
-            <li className="flex gap-x-2 items-center">
+          <ul className="mt-auto flex flex-col gap-2 p-3 font-semibold text-red-600">
+            <li className="flex items-center gap-x-2">
               <DeleteIcon />
               <button>Eliminar cuenta</button>
             </li>
@@ -42,8 +42,8 @@ function ProfileUser() {
       <section className="flex-1">
         <Routes>
           <Route path="/" element={<AccountInfo />} />
-          <Route path="/adress" element={<AccountAdress />} />
-          <Route path="/orders" element={<UserOrders />} />
+          <Route path="adress" element={<AccountAdress />} />
+          <Route path="orders" element={<UserOrders />} />
         </Routes>
       </section>
     </div>

@@ -2,11 +2,11 @@ import { Route, Routes } from 'react-router-dom'
 import AsideAdmin from './AsideAdmin'
 import Client from './Clients/Client'
 import Dashboard from './Dashboard'
+import Employee from './Employee/Employee'
 import Inventory from './Inventory/Inventory'
 import Orders from './Order/Orders'
 import ProductsInfo from './Products/ProductsInfo'
 import Provider from './Providers/Provider'
-import Employee from './Employee/Employee'
 
 function ViewAdmin() {
   return (

@@ -24,19 +24,19 @@ function App() {
         <UserProvider>
           <CartProvider>
             <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/view/*" element={<ViewAdmin />} />
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route path="view/*" element={<ViewAdmin />} />
               <Route element={<Layout />}>
                 <Route path="/" element={<Home />} />
-                <Route path="/view/profile/*" element={<ProfileUser />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/checkout" element={<CheckoutPage />} />
-                <Route path="/order/:orderId" element={<OrderCard />} />
-                <Route path="/products" element={<Products />} />
-                <Route path="/products/:id" element={<InfoProduct />} />
-                <Route path="/quienes-somos/*" element={<AboutUs />} />
-                <Route path="/contact" element={<Contact />} />
+                <Route path="view/profile/*" element={<ProfileUser />} />
+                <Route path="cart" element={<Cart />} />
+                <Route path="checkout" element={<CheckoutPage />} />
+                <Route path="order/:orderId" element={<OrderCard />} />
+                <Route path="products" element={<Products />} />
+                <Route path="products/:id" element={<InfoProduct />} />
+                <Route path="quienes-somos/*" element={<AboutUs />} />
+                <Route path="contact" element={<Contact />} />
                 <Route path="*" element={<Error />} />
               </Route>
             </Routes>
